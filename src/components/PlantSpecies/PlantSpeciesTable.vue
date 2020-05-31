@@ -103,7 +103,12 @@ export default {
     }),
 
     viewItem(item) {
-      console.log(item);
+      this.$router.push({
+        name: 'PlantSpeciesView',
+        params: {
+          id: item.id,
+        },
+      });
     },
 
     editItem(item) {

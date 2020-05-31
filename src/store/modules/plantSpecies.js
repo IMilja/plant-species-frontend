@@ -6,6 +6,22 @@ export default {
     page: 1,
     limit: 10,
     plantSpecies: [],
+    singlePlantSpecies: {
+      croatianName: '',
+      latinName: '',
+      synoynm: '',
+      description: '',
+      genus: {
+        name: '',
+        botanicalFamily: {
+          croatianName: '',
+          latinName: '',
+        },
+      },
+      systematist: {
+        name: '',
+      },
+    },
   },
 
   mutations: {
@@ -25,6 +41,9 @@ export default {
       if (index !== -1) {
         state.plantSpecies.splice(index, 1, plantSpecies);
       }
+    },
+    SET_SINGLE_PLANT_SPECIES(state, plantSpecies) {
+      state.singlePlantSpecies = plantSpecies;
     },
   },
 
@@ -50,6 +69,11 @@ export default {
     async edit({ commit }, plantSpecies) {
       const response = await HTTP.patch(`plant-species/${plantSpecies.id}`, plantSpecies);
       commit('EDIT_PLANT_SPECIES', response.data.data);
+    },
+
+    async loadSingle({ commit }, plantSpeciesId) {
+      const response = await HTTP.get(`plant-species/${plantSpeciesId}`);
+      commit('SET_SINGLE_PLANT_SPECIES', response.data.data);
     },
   },
 };

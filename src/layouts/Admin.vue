@@ -42,9 +42,7 @@
     </v-app-bar>
 
     <v-content>
-      <v-layout>
-        <router-view></router-view>
-      </v-layout>
+      <router-view></router-view>
     </v-content>
   </div>
 </template>
