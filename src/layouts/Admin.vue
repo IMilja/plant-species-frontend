@@ -15,6 +15,14 @@
             <v-list-item-title>Početna Stranica</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        <v-list-item link :to="{ name: 'PlantSpeciesHome' }">
+          <v-list-item-action>
+            <v-icon>mdi-flower</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>Biljne vrste</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
 
@@ -35,8 +43,7 @@
 
     <v-content>
       <v-layout>
-        <v-container>
-        </v-container>
+        <router-view></router-view>
       </v-layout>
     </v-content>
   </div>

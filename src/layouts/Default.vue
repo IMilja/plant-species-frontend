@@ -9,7 +9,7 @@
       <v-spacer></v-spacer>
       <v-btn color="#AF4CAB"
         class="elevation-3"
-        :to="{ name: 'AdminPanel' }"
+        :to="{ name: 'PlantSpeciesHome' }"
       >
         Kontrolna Ploča
       </v-btn>

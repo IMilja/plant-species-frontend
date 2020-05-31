@@ -11,8 +11,14 @@ const routes = [
   },
   {
     path: '/kontrolna-ploca',
-    name: 'AdminPanel',
     component: () => import(/* webpackChunkName: "Admin" */ '@/layouts/Admin.vue'),
+    children: [
+      {
+        path: '',
+        name: 'PlantSpeciesHome',
+        component: () => import(/* webpackChunkName: "PlantSpeciesHome" */ '@/views/PlantSpeciesHome.vue'),
+      },
+    ],
   },
 ];
 
