@@ -24,9 +24,14 @@ const routes = [
         component: () => import(/* webpackChunkName: "PlantSpeciesView" */ '@/views/PlantSpeciesView.vue'),
         children: [
           {
-            path: '',
+            path: 'osnovne-informacije',
             name: 'PlantSpeciesView',
             component: () => import(/* webpackChunkName: "PlantSpeciesBasicInfo" */ '@/components/PlantSpecies/PlantSpeciesBasicInfo.vue'),
+          },
+          {
+            path: 'slike',
+            name: 'PlantSpeciesImages',
+            component: () => import(/* webpackChunkName: "PlantSpeciesBasicInfo" */ '@/components/PlantSpecies/PlantSpeciesImages.vue'),
           },
         ],
       },

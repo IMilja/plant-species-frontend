@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="dialog" max-width="700px">
     <template v-slot:activator="{ on }">
-      <v-btn color="blue" dark class="mb-2" v-on="on">Novi unos</v-btn>
+      <v-btn color="green" dark class="mb-2" v-on="on">Novi unos</v-btn>
     </template>
     <v-card>
       <v-card-title>

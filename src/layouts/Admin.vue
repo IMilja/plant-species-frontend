@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-layout>
     <v-navigation-drawer
       v-model="drawer"
       clipped
@@ -29,7 +29,7 @@
     <v-app-bar
       app
       clipped-left
-      color="blue"
+      color="green"
       dark
     >
       <v-app-bar-nav-icon
@@ -44,7 +44,7 @@
     <v-content>
       <router-view></router-view>
     </v-content>
-  </div>
+  </v-layout>
 </template>
 
 <script>
