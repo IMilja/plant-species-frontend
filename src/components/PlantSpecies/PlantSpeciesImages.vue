@@ -8,6 +8,9 @@
       <v-spacer></v-spacer>
     </v-row>
     <v-row v-if="!loading">
+      <v-col v-if="!images.length">
+        <p class="headline text-center mt-5">Nema dodijeljenih slika</p>
+      </v-col>
       <v-col
         v-for="image in images"
         :key="image.id"

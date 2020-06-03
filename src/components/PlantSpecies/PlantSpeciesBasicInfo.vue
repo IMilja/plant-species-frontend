@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <v-row>
       <v-col class="col-12 col-lg-5">
         <p class="title font-weight-regular mb-2">Latinski naziv</p>

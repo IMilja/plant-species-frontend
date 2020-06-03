@@ -4,6 +4,7 @@ import plantSpecies from './modules/plantSpecies';
 import systematist from './modules/systematist';
 import genus from './modules/genus';
 import image from './modules/image';
+import usefulPart from './modules/usefulPart';
 
 Vue.use(Vuex);
 
@@ -13,5 +14,6 @@ export default new Vuex.Store({
     systematist,
     genus,
     image,
+    usefulPart,
   },
 });

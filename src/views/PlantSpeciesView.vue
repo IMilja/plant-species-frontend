@@ -1,53 +1,56 @@
 <template>
   <v-container>
     <v-row v-if="!loading">
-      <v-spacer></v-spacer>
-      <v-col cols="8">
-        <h2 class="font-weight-bold display-2">{{ plantSpecies.croatianName }}</h2>
+      <v-col>
+        <h2 class="font-weight-bold display-2 text-center">{{ plantSpecies.croatianName }}</h2>
       </v-col>
     </v-row>
     <v-row v-if="!loading">
       <v-spacer></v-spacer>
-      <v-col cols="2">
-        <v-navigation-drawer permanent>
-          <v-list nav dense>
-            <v-list-item-group>
-              <v-list-item link :to="{ name: 'PlantSpeciesView' }" color="green">
-                <v-list-item-content>
-                  <v-list-item-title>Osnovne informacije</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item link :to="{ name: 'PlantSpeciesImages' }" color="green">
-                <v-list-item-content>
-                  <v-list-item-title>Slike</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item link color="green">
-                <v-list-item-content>
-                  <v-list-item-title>Uporabni dijelovi</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item link color="green">
-                <v-list-item-content>
-                  <v-list-item-title>Slike uporabnih dijelova</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item link color="green">
-                <v-list-item-content>
-                  <v-list-item-title>Bioaktivne substance</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item link color="green">
-                <v-list-item-content>
-                  <v-list-item-title>Podvrste</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-            </v-list-item-group>
-          </v-list>
-        </v-navigation-drawer>
-      </v-col>
-      <v-col cols="7" class="pl-0">
-        <router-view></router-view>
+      <v-col cols="10">
+        <v-row>
+          <v-col cols="12" md="3">
+            <v-navigation-drawer permanent>
+              <v-list nav dense>
+                <v-list-item-group>
+                  <v-list-item link :to="{ name: 'PlantSpeciesView' }" color="green">
+                    <v-list-item-content>
+                      <v-list-item-title>Osnovne informacije</v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                  <v-list-item link :to="{ name: 'PlantSpeciesImages' }" color="green">
+                    <v-list-item-content>
+                      <v-list-item-title>Slike</v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                  <v-list-item link :to="{ name: 'PlantSpeciesUsefulParts' }" color="green">
+                    <v-list-item-content>
+                      <v-list-item-title>Uporabni dijelovi</v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                  <v-list-item link color="green">
+                    <v-list-item-content>
+                      <v-list-item-title>Slike uporabnih dijelova</v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                  <v-list-item link color="green">
+                    <v-list-item-content>
+                      <v-list-item-title>Bioaktivne substance</v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                  <v-list-item link color="green">
+                    <v-list-item-content>
+                      <v-list-item-title>Podvrste</v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                </v-list-item-group>
+              </v-list>
+            </v-navigation-drawer>
+          </v-col>
+          <v-col cols="12" md="9" class="pl-0">
+            <router-view></router-view>
+          </v-col>
+        </v-row>
       </v-col>
       <v-spacer></v-spacer>
     </v-row>

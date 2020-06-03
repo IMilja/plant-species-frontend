@@ -33,6 +33,11 @@ const routes = [
             name: 'PlantSpeciesImages',
             component: () => import(/* webpackChunkName: "PlantSpeciesBasicInfo" */ '@/components/PlantSpecies/PlantSpeciesImages.vue'),
           },
+          {
+            path: 'uporabni-dijelovi',
+            name: 'PlantSpeciesUsefulParts',
+            component: () => import(/* webpackChunkName: "PlantSpeciesBasicInfo" */ '@/components/UsefulPart/UsefulPartTable.vue'),
+          },
         ],
       },
     ],
