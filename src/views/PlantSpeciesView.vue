@@ -38,7 +38,7 @@
                       <v-list-item-title>Bioaktivne substance</v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
-                  <v-list-item link color="green">
+                  <v-list-item link :to="{ name: 'PlantSpeciesSubspecies' }" color="green">
                     <v-list-item-content>
                       <v-list-item-title>Podvrste</v-list-item-title>
                     </v-list-item-content>

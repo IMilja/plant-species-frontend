@@ -41,6 +41,7 @@
 </template>
 
 <script>
+// TODO: Error Handling
 import { mapState, mapActions, mapGetters } from 'vuex';
 
 export default {

@@ -8,32 +8,27 @@
       <v-spacer></v-spacer>
     </v-row>
     <v-row v-if="!loading">
-      <v-col v-if="!usefulParts.length">
-        <p class="headline text-center mt-5">Nema uporabnih dijelova</p>
+      <v-col v-if="!subspecies.length">
+        <p class="headline text-center mt-5">Nema podvrsta</p>
       </v-col>
-      <v-col v-if="usefulParts.length">
+      <v-col v-if="subspecies.length">
         <v-data-table
           :headers="headers"
-          :items="usefulParts"
+          :items="subspecies"
           :hide-default-footer="true"
-          :expanded.sync="expanded"
-          show-expand
           flat
         >
           <template v-slot:item.actions="{ item }">
             <v-btn x-small dark color="green lighten-1" class="elevation-0 ml-2" link
               @click="editItem(item)"
             >
-              Ažuriraj opis
+              Ažuriraj
             </v-btn>
             <v-btn x-small dark color="red lighten-1" class="elevation-0 ml-2" link
               @click="deleteItem(item)"
             >
               Izbriši
             </v-btn>
-          </template>
-          <template v-slot:expanded-item="{ headers, item }">
-            <td :colspan="headers.length" class="pa-5 text-justify">{{ item.description }}</td>
           </template>
         </v-data-table>
       </v-col>
@@ -51,7 +46,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
-import UsefulPartForm from '@/components/UsefulPart/UsefulPartForm.vue';
+import UsefulPartForm from '@/components/Subspecies/SubspeciesForm.vue';
 import ConfirmDialog from '../general/ConfirmDialog.vue';
 
 export default {
@@ -65,19 +60,12 @@ export default {
   data() {
     return {
       loading: false,
-      expanded: [],
       headers: [
         {
-          text: 'Hrvatski naziv',
+          text: 'Naziv',
           align: 'start',
           sortable: false,
-          value: 'croatianName',
-        },
-        {
-          text: 'Latinski naziv',
-          align: 'start',
-          sortable: false,
-          value: 'latinName',
+          value: 'name',
         },
         {
           text: 'Akcije',
@@ -91,36 +79,33 @@ export default {
 
   computed: {
     ...mapState({
-      usefulParts: (state) => state.usefulPart.usefulParts,
+      subspecies: (state) => state.subspecies.subspecies,
     }),
   },
 
   async created() {
     this.loading = true;
-    await this.loadUsefulParts(this.$route.params.id);
+    await this.loadSubspecies(this.$route.params.id);
     this.loading = false;
   },
 
   methods: {
     ...mapActions({
-      loadUsefulParts: 'usefulPart/loadUsefulParts',
-      deleteUsefulPart: 'usefulPart/delete',
+      loadSubspecies: 'subspecies/loadAll',
+      deleteSubspecies: 'subspecies/delete',
     }),
 
     async editItem(item) {
-      const editingIndex = this.usefulParts.indexOf(item);
+      const editingIndex = this.subspecies.indexOf(item);
       this.$refs.form.edit(editingIndex, item);
     },
 
     async deleteItem(item) {
       if (await this.$refs.confirm.open(
-        'Brisanje uporabnog dijela',
-        `Jeste li sigurni da želite izbrisati uporabni dio "${item.croatianName}" ?`,
+        'Brisanje podvrste',
+        `Jeste li sigurni da želite izbrisati uporabni dio "${item.name}" ?`,
       )) {
-        this.deleteUsefulPart({
-          plantSpeciesId: this.$route.params.id,
-          usefulPartId: item.id,
-        });
+        this.deleteSubspecies(item);
       }
     },
   },

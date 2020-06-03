@@ -20,7 +20,7 @@ export default {
       state.systematists = systematists;
     },
     EDIT_SYSTEMATIST(state, systematist) {
-      const index = state.systematists.findIndex((p) => p.id === systematist.id);
+      const index = state.systematists.findIndex((s) => s.id === systematist.id);
 
       if (index !== -1) {
         state.systematists.splice(index, 1, systematist);

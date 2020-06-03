@@ -31,12 +31,17 @@ const routes = [
           {
             path: 'slike',
             name: 'PlantSpeciesImages',
-            component: () => import(/* webpackChunkName: "PlantSpeciesBasicInfo" */ '@/components/PlantSpecies/PlantSpeciesImages.vue'),
+            component: () => import(/* webpackChunkName: "PlantSpeciesImages" */ '@/components/PlantSpecies/PlantSpeciesImages.vue'),
           },
           {
             path: 'uporabni-dijelovi',
             name: 'PlantSpeciesUsefulParts',
-            component: () => import(/* webpackChunkName: "PlantSpeciesBasicInfo" */ '@/components/UsefulPart/UsefulPartTable.vue'),
+            component: () => import(/* webpackChunkName: "PlantSpeciesUsefulParts" */ '@/components/UsefulPart/UsefulPartTable.vue'),
+          },
+          {
+            path: 'podvrste',
+            name: 'PlantSpeciesSubspecies',
+            component: () => import(/* webpackChunkName: "PlantSpeciesSubspecies" */ '@/components/Subspecies/SubspeciesTable.vue'),
           },
         ],
       },

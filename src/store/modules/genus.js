@@ -16,11 +16,11 @@ export default {
       state.genera.push(genus);
     },
     DELETE_GENUS(state, genusId) {
-      const genera = state.genera.filter((s) => s.id !== genusId);
+      const genera = state.genera.filter((g) => g.id !== genusId);
       state.genera = genera;
     },
     EDIT_GENUS(state, genus) {
-      const index = state.genera.findIndex((p) => p.id === genus.id);
+      const index = state.genera.findIndex((g) => g.id === genus.id);
 
       if (index !== -1) {
         state.genera.splice(index, 1, genus);
