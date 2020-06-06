@@ -22,13 +22,11 @@
                 <v-list-item-content>
                   <v-list-item-title class="title">{{ image.name }}</v-list-item-title>
                   <p class="body-1 my-5">{{ descriptionSummary }}</p>
-                  <v-btn
-                    color="info"
-                    text
+                  <a
                     @click="showSummary()"
-                    v-if="image.description > 200"
+                    v-if="image.description.length > 200"
                     class="mb-5"
-                  >{{ summary ? 'Pročitaj više' : 'Pročitaj manje' }}</v-btn>
+                  >{{ summary ? 'Pročitaj više' : 'Pročitaj manje' }}</a>
                   <p class="body-2">
                     Izvor:
                     <br />
