@@ -23,6 +23,14 @@
             <v-list-item-title>Biljne vrste</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        <v-list-item link :to="{ name: 'GeneraHome' }">
+          <v-list-item-action>
+            <v-icon>mdi-spa</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>Rodovi</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
 

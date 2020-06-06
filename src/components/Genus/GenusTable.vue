@@ -1,23 +1,18 @@
 <template>
   <v-data-table
     :headers="headers"
-    :items="plantSpecies"
+    :items="genera"
     class="mt-7 elevation-1"
   >
     <template v-slot:top>
       <v-toolbar flat>
         <v-spacer></v-spacer>
         <confirm-dialog ref="confirm"></confirm-dialog>
-        <plant-species-form ref="form"></plant-species-form>
+        <genus-form ref="form"></genus-form>
       </v-toolbar>
     </template>
     <template v-slot:item.actions="{ item }">
-      <v-btn x-small dark color="blue" class="elevation-0 ml-2" link
-        @click="viewItem(item)"
-      >
-        Pogled
-      </v-btn>
-      <v-btn x-small dark color="green" class="elevation-0 ml-2" link
+      <v-btn x-small dark color="green lighten-1" class="elevation-0 ml-2" link
         @click="editItem(item)"
       >
         Ažuriraj
@@ -28,57 +23,49 @@
         Izbriši
       </v-btn>
     </template>
-    <template v-slot:no-data>
-      <span>Nema podataka</span>
-    </template>
   </v-data-table>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex';
-import PlantSpeciesForm from './PlantSpeciesForm.vue';
-import ConfirmDialog from '../general/ConfirmDialog.vue';
+import GenusForm from '@/components/Genus/GenusForm.vue';
+import ConfirmDialog from '@/components/general/ConfirmDialog.vue';
 
 export default {
-  name: 'PlantSpeciesTable',
+  name: 'GenusTable',
 
   components: {
-    PlantSpeciesForm,
+    GenusForm,
     ConfirmDialog,
   },
 
   data() {
     return {
+      loading: false,
       headers: [
         {
           text: 'ID',
           align: 'start',
-          sortable: false,
+          sortable: true,
           value: 'id',
         },
         {
-          text: 'Hrvatski naziv',
+          text: 'Naziv',
           align: 'start',
           sortable: false,
-          value: 'croatianName',
+          value: 'name',
         },
         {
-          text: 'Latinski naziv',
+          text: 'Botanička porodica (hrv. naziv)',
           align: 'start',
           sortable: false,
-          value: 'latinName',
+          value: 'botanicalFamily.croatianName',
         },
         {
-          text: 'Sinonim',
+          text: 'Botanička porodica (lat. naziv)',
           align: 'start',
           sortable: false,
-          value: 'synonym',
-        },
-        {
-          text: 'Botanička porodica',
-          align: 'start',
-          sortable: false,
-          value: 'genus.botanicalFamily.croatianName',
+          value: 'botanicalFamily.latinName',
         },
         {
           text: 'Akcije',
@@ -92,43 +79,35 @@ export default {
 
   computed: {
     ...mapState({
-      plantSpecies: (state) => state.plantSpecies.plantSpecies,
+      genera: (state) => state.genus.genera,
     }),
+  },
+
+  async created() {
+    this.loading = true;
+    await this.loadGenera();
+    this.loading = false;
   },
 
   methods: {
     ...mapActions({
-      loadPlantSpecies: 'plantSpecies/loadAll',
-      deletePlantSpecies: 'plantSpecies/delete',
+      loadGenera: 'genus/loadAll',
+      deleteGenus: 'genus/delete',
     }),
 
-    viewItem(item) {
-      this.$router.push({
-        name: 'PlantSpeciesView',
-        params: {
-          id: item.id,
-        },
-      });
-    },
-
     editItem(item) {
-      const editingIndex = this.plantSpecies.indexOf(item);
+      const editingIndex = this.genera.indexOf(item);
       this.$refs.form.edit(editingIndex, item);
     },
 
     async deleteItem(item) {
       if (await this.$refs.confirm.open(
         'Brisanje biljne vrste',
-        `Jeste li sigurni da želite izbrisati biljnu vrstu "${item.croatianName}"`,
+        `Jeste li sigurni da želite izbrisati rod "${item.name}"`,
       )) {
-        this.deletePlantSpecies(item);
+        this.deleteGenus(item);
       }
     },
   },
-
-  created() {
-    this.loadPlantSpecies();
-  },
-
 };
 </script>

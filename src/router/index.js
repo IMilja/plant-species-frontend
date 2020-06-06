@@ -45,6 +45,11 @@ const routes = [
           },
         ],
       },
+      {
+        path: 'rodovi',
+        name: 'GeneraHome',
+        component: () => import(/* webpackChunkName: "GeneraHome" */ '@/views/GeneraHome.vue'),
+      },
     ],
   },
 ];

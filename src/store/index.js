@@ -6,6 +6,7 @@ import genus from './modules/genus';
 import image from './modules/image';
 import usefulPart from './modules/usefulPart';
 import subspecies from './modules/subspecies';
+import botanicalFamily from './modules/botanicalFamily';
 
 Vue.use(Vuex);
 
@@ -17,5 +18,6 @@ export default new Vuex.Store({
     image,
     usefulPart,
     subspecies,
+    botanicalFamily,
   },
 });

@@ -7,7 +7,7 @@
     </v-row>
     <v-row v-if="!loading">
       <v-spacer></v-spacer>
-      <v-col cols="10">
+      <v-col cols="8">
         <v-row>
           <v-col cols="12" md="3">
             <v-navigation-drawer permanent>
@@ -47,7 +47,7 @@
               </v-list>
             </v-navigation-drawer>
           </v-col>
-          <v-col cols="12" md="9" class="pl-0">
+          <v-col cols="12" md="7" class="pl-0">
             <router-view></router-view>
           </v-col>
         </v-row>
