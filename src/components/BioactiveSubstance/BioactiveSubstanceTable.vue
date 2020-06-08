@@ -2,38 +2,33 @@
   <v-container>
     <v-row>
       <v-col>
-        <useful-part-form ref="form"></useful-part-form>
+        <bioactive-substance-assign-form></bioactive-substance-assign-form>
         <confirm-dialog ref="confirm"></confirm-dialog>
       </v-col>
       <v-spacer></v-spacer>
     </v-row>
     <v-row v-if="!loading">
-      <v-col v-if="!usefulParts.length">
-        <p class="headline text-center mt-5">Nema uporabnih dijelova</p>
+      <v-col v-if="!bioactiveSubstances.length">
+        <p class="headline text-center mt-5">Nema bioaktivnih substanci</p>
       </v-col>
-      <v-col v-if="usefulParts.length">
+      <v-col v-if="bioactiveSubstances.length">
         <v-data-table
           :headers="headers"
-          :items="usefulParts"
+          :items="bioactiveSubstances"
           :hide-default-footer="true"
-          :expanded.sync="expanded"
-          show-expand
           flat
         >
           <template v-slot:item.actions="{ item }">
-            <v-btn x-small dark color="green lighten-1" class="elevation-0 ml-2" link
-              @click="editItem(item)"
-            >
-              Ažuriraj opis
-            </v-btn>
-            <v-btn x-small dark color="red lighten-1" class="elevation-0 ml-2" link
+            <v-btn
+              dark
+              class="elevation-0 ml-2"
+              color="red lighten-1"
+              x-small
+              link
               @click="deleteItem(item)"
             >
               Izbriši
             </v-btn>
-          </template>
-          <template v-slot:expanded-item="{ headers, item }">
-            <td :colspan="headers.length" class="pa-5 text-justify">{{ item.description }}</td>
           </template>
         </v-data-table>
       </v-col>
@@ -51,33 +46,44 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
-import UsefulPartForm from '@/components/UsefulPart/UsefulPartForm.vue';
+import BioactiveSubstanceAssignForm from '@/components/BioactiveSubstance/BioactiveSubstanceAssignForm.vue';
 import ConfirmDialog from '../general/ConfirmDialog.vue';
 
 export default {
-  name: 'UsefulPartTable',
+  name: 'BioactiveSubstanceTable',
 
   components: {
-    UsefulPartForm,
+    BioactiveSubstanceAssignForm,
     ConfirmDialog,
   },
 
   data() {
     return {
       loading: false,
-      expanded: [],
       headers: [
         {
-          text: 'Hrvatski naziv',
+          text: 'Naziv',
           align: 'start',
           sortable: false,
-          value: 'croatianName',
+          value: 'name',
         },
         {
-          text: 'Latinski naziv',
+          text: 'Sadržaj',
           align: 'start',
           sortable: false,
-          value: 'latinName',
+          value: 'content',
+        },
+        {
+          text: 'Mjerna veličina',
+          align: 'start',
+          sortable: false,
+          value: 'measureUnitName',
+        },
+        {
+          text: 'Nalazi se na uporabnom dijelu',
+          align: 'start',
+          sortable: false,
+          value: 'usefulPartCroatianName',
         },
         {
           text: 'Akcije',
@@ -91,40 +97,35 @@ export default {
 
   computed: {
     ...mapState({
-      usefulParts: (state) => state.plantSpecies.usefulParts,
+      bioactiveSubstances: (state) => state.plantSpecies.bioactiveSubstances,
     }),
   },
 
   async created() {
     this.loading = true;
-    await this.loadUsefulParts(this.$route.params.id);
+    await this.loadBioactiveSubnstaces(this.$route.params.id);
     this.loading = false;
   },
 
   methods: {
     ...mapActions({
-      loadUsefulParts: 'plantSpecies/loadUsefulParts',
-      deleteUsefulPart: 'plantSpecies/deleteUsefulPart',
+      loadBioactiveSubnstaces: 'plantSpecies/loadBioactiveSubstances',
+      deleteBioactiveSubstance: 'plantSpecies/deleteBioactiveSubstance',
     }),
-
-    async editItem(item) {
-      const editingIndex = this.usefulParts.indexOf(item);
-      this.$refs.form.edit(editingIndex, item);
-    },
 
     async deleteItem(item) {
       if (await this.$refs.confirm.open(
-        'Brisanje uporabnog dijela',
-        `Jeste li sigurni da želite izbrisati uporabni dio "${item.croatianName}" ?`,
+        'Brisanje bioaktivne tvari',
+        `Jeste li sigurni da želite izbrisati bioaktivnu tvar "${item.name}" ?`,
       )) {
-        this.deleteUsefulPart({
+        this.deleteBioactiveSubstance({
           plantSpeciesId: this.$route.params.id,
-          usefulPartId: item.id,
+          usefulPartId: item.usefulPartId,
+          bioactiveSubstanceId: item.bioactiveSubstanceId,
         });
       }
     },
   },
-
 };
 </script>
 

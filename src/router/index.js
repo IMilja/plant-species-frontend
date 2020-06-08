@@ -39,6 +39,11 @@ const routes = [
             component: () => import(/* webpackChunkName: "PlantSpeciesUsefulParts" */ '@/components/UsefulPart/UsefulPartTable.vue'),
           },
           {
+            path: 'bioaktivne-tvari',
+            name: 'PlantSpeciesBioactiveSubstances',
+            component: () => import(/* webpackChunkName: "PlantSpeciesSubspecies" */ '@/components/BioactiveSubstance/BioactiveSubstanceTable.vue'),
+          },
+          {
             path: 'podvrste',
             name: 'PlantSpeciesSubspecies',
             component: () => import(/* webpackChunkName: "PlantSpeciesSubspecies" */ '@/components/Subspecies/SubspeciesTable.vue'),

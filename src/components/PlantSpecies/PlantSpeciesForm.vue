@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="dialog" max-width="700px">
     <template v-slot:activator="{ on }">
-      <v-btn color="green" dark class="mb-2" v-on="on">Novi unos</v-btn>
+      <v-btn color="green" dark class="mb-2" v-on="on">Unos biljne vrste</v-btn>
     </template>
     <v-card>
       <v-card-title>
@@ -89,6 +89,7 @@
 </template>
 
 <script>
+// TODO: Loader on post request
 import { mapState, mapActions } from 'vuex';
 
 export default {
@@ -133,7 +134,7 @@ export default {
     }),
 
     formTitle() {
-      return this.editingIndex === -1 ? 'Novi unos' : 'Ažuriranje';
+      return this.editingIndex === -1 ? 'Unos' : 'Ažuriranje';
     },
   },
 

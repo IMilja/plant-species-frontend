@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="dialog" max-width="500px">
     <template v-slot:activator="{ on }">
-      <v-btn color="green" dark class="mb-2" v-on="on">Novi unos podvrste</v-btn>
+      <v-btn color="green" dark class="mb-2" v-on="on">Unos podvrste</v-btn>
     </template>
     <v-card>
       <v-card-title>
@@ -51,7 +51,7 @@ export default {
 
   computed: {
     formTitle() {
-      return this.editingIndex === -1 ? 'Novi unos' : 'Ažuriranje';
+      return this.editingIndex === -1 ? 'Unos' : 'Ažuriranje';
     },
   },
 

@@ -9,11 +9,9 @@
       </v-card-title>
 
       <v-card-text>
-        <v-form
-          ref="form"
-          :lazy-validation="true"
-        >
-          <v-container><v-row>
+        <v-form ref="form" :lazy-validation="true">
+          <v-container>
+            <v-row>
               <v-col>
                 <v-alert v-for="(error, index) in errors" :key="index" type="error">
                   <span v-for="(message, key) in error" :key="key">
@@ -58,7 +56,6 @@
 </template>
 
 <script>
-// TODO: Handle Erros
 import { mapState, mapActions } from 'vuex';
 
 export default {
@@ -90,7 +87,7 @@ export default {
     }),
 
     formTitle() {
-      return this.editingIndex === -1 ? 'Novi unos' : 'Ažuriranje';
+      return this.editingIndex === -1 ? 'Unos' : 'Ažuriranje';
     },
   },
 

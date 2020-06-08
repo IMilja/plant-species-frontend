@@ -7,6 +7,8 @@ import image from './modules/image';
 import usefulPart from './modules/usefulPart';
 import subspecies from './modules/subspecies';
 import botanicalFamily from './modules/botanicalFamily';
+import bioactiveSubstance from './modules/bioactiveSubstance';
+import measureUnit from './modules/measureUnit';
 
 Vue.use(Vuex);
 
@@ -19,5 +21,7 @@ export default new Vuex.Store({
     usefulPart,
     subspecies,
     botanicalFamily,
+    bioactiveSubstance,
+    measureUnit,
   },
 });

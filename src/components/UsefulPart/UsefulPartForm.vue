@@ -9,27 +9,40 @@
       </v-card-title>
 
       <v-card-text>
-        <v-container>
-          <v-col v-if="editingIndex === -1">
-            <v-select
-              :items="availableUsefulParts"
-              v-model="editingItem.usefulPartId"
-              label="Uporabni dio"
-              item-text="croatianName"
-              item-value="id"
-            >
-              <template v-slot:no-data>
-                <span class="px-3 py-2">Nema podataka</span>
-              </template>
-            </v-select>
-          </v-col>
-          <v-col>
-            <v-textarea
-              v-model="editingItem.description"
-              label="Opis uporabnog dijela"
-            ></v-textarea>
-          </v-col>
-        </v-container>
+        <v-form ref="form" :lazy-validation="true">
+          <v-container>
+            <v-row v-if="errors.length">
+              <v-col>
+                <v-alert v-for="(error, index) in errors" :key="index" type="error">
+                  <span v-for="(message, key) in error" :key="key">
+                    {{ message }}
+                  </span>
+                </v-alert>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col v-if="editingIndex === -1">
+                <v-select
+                  :items="availableUsefulParts"
+                  v-model="editingItem.usefulPartId"
+                  label="Uporabni dio"
+                  item-text="croatianName"
+                  item-value="id"
+                >
+                  <template v-slot:no-data>
+                    <span class="px-3 py-2">Nema podataka</span>
+                  </template>
+                </v-select>
+              </v-col>
+              <v-col>
+                <v-textarea
+                  v-model="editingItem.description"
+                  label="Opis uporabnog dijela"
+                ></v-textarea>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-form>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="red darken-1" text @click="close">Prekid</v-btn>
@@ -42,7 +55,7 @@
 
 <script>
 // TODO: Error Handling
-import { mapState, mapActions, mapGetters } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 
 export default {
   name: 'UsefulPartForm',
@@ -61,20 +74,27 @@ export default {
         plantSpeciesId: this.$route.params.id,
         description: '',
       },
+      errors: [],
+      rules: {
+        usefulPart: [(v) => !!v || 'Uporabni dio je obavezan'],
+      },
     };
   },
 
   computed: {
     ...mapState({
-      allUsefulParts: (state) => state.usefulPart.allUsefulParts,
-    }),
-
-    ...mapGetters({
-      availableUsefulParts: 'usefulPart/availableUsefulParts',
+      allUsefulParts: (state) => state.usefulPart.usefulParts,
+      takenUsefulParts: (state) => state.plantSpecies.usefulParts,
     }),
 
     formTitle() {
       return this.editingIndex === -1 ? 'Dodijeli novi' : 'Ažuriranje opisa';
+    },
+
+    availableUsefulParts() {
+      return this.allUsefulParts.filter(
+        (o1) => this.takenUsefulParts.filter((o2) => o2.id === o1.id).length === 0,
+      );
     },
   },
 
@@ -94,33 +114,35 @@ export default {
 
   methods: {
     ...mapActions({
-      loadAllUsefulParts: 'usefulPart/loadAllUsefulParts',
-      addUsefulPart: 'usefulPart/create',
-      editUsefulPart: 'usefulPart/edit',
+      loadAllUsefulParts: 'usefulPart/loadAll',
+      addUsefulPart: 'plantSpecies/createUsefulPart',
+      editUsefulPart: 'plantSpecies/editUsefulPart',
     }),
 
     close() {
       this.dialog = false;
       setTimeout(() => {
         this.editingIndex = -1;
+        this.errors = [];
         this.editingItem = { ...this.defaultItem };
       }, 300);
     },
 
     async save() {
+      this.errors = [];
       if (this.editingIndex === -1) {
         try {
           await this.addUsefulPart(this.editingItem);
           this.close();
         } catch (error) {
-          console.log(error);
+          this.errors = error.response.data.data;
         }
       } else {
         try {
           await this.editUsefulPart(this.editingItem);
           this.close();
         } catch (error) {
-          console.log(error);
+          this.errors = error.response.data.data;
         }
       }
     },

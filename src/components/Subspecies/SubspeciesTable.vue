@@ -103,7 +103,7 @@ export default {
     async deleteItem(item) {
       if (await this.$refs.confirm.open(
         'Brisanje podvrste',
-        `Jeste li sigurni da želite izbrisati uporabni dio "${item.name}" ?`,
+        `Jeste li sigurni da želite izbrisati podvrstu "${item.name}" ?`,
       )) {
         this.deleteSubspecies(item);
       }

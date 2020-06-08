@@ -33,9 +33,9 @@
                       <v-list-item-title>Slike uporabnih dijelova</v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
-                  <v-list-item link color="green">
+                  <v-list-item link :to="{ name: 'PlantSpeciesBioactiveSubstances' }" color="green">
                     <v-list-item-content>
-                      <v-list-item-title>Bioaktivne substance</v-list-item-title>
+                      <v-list-item-title>Bioaktivne tvari</v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
                   <v-list-item link :to="{ name: 'PlantSpeciesSubspecies' }" color="green">
@@ -47,7 +47,7 @@
               </v-list>
             </v-navigation-drawer>
           </v-col>
-          <v-col cols="12" md="7" class="pl-0">
+          <v-col cols="12" md="8" class="pl-0">
             <router-view></router-view>
           </v-col>
         </v-row>
