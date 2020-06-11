@@ -65,6 +65,7 @@ const routes = [
 ];
 
 const router = new VueRouter({
+  base: process.env.NODE_ENV === 'production' ? '/biljne-vrste' : '/',
   mode: 'history',
   routes,
 });
