@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="dialog" max-width="550px">
     <template v-slot:activator="{ on }">
-      <v-btn color="green" dark class="mb-2" v-on="on">Dodjeli bioaktivu tvar</v-btn>
+      <v-btn color="green" dark v-on="on">Dodjeli bioaktivu tvar</v-btn>
     </template>
     <v-card>
       <v-card-title>
@@ -11,15 +11,6 @@
       <v-card-text>
         <v-form ref="form" :lazy-validation="true">
           <v-container>
-            <v-row v-if="errors.length">
-              <v-col>
-                <v-alert v-for="(error, index) in errors" :key="index" type="error">
-                  <span v-for="(message, key) in error" :key="key">
-                    {{ message }}
-                  </span>
-                </v-alert>
-              </v-col>
-            </v-row>
             <v-row>
               <v-col cols="10" sm="9">
                 <v-select
@@ -30,6 +21,7 @@
                   item-text="name"
                   item-value="id"
                   :rules="rules.bioactiveSubstance"
+                  :error-messages="errors.bioactiveSubstanceId"
                 >
                   <template v-slot:item="{ item, attrs, on }">
                     <v-list-item
@@ -65,6 +57,7 @@
                   label="Unesite količinu sadržaja bioaktivne tvari"
                   placeholder="Količina sadržaja"
                   :rules="rules.content"
+                  :error-messages="errors.content"
                 >
                 </v-text-field>
               </v-col>
@@ -77,6 +70,7 @@
                   item-text="croatianName"
                   item-value="id"
                   :rules="rules.usefulPart"
+                  :error-messages="errors.usefulPartId"
                 >
                   <template v-slot:item="{ item, attrs, on }">
                     <v-list-item
@@ -141,7 +135,7 @@ export default {
         bioactiveSubstanceId: null,
         content: '',
       },
-      errors: [],
+      errors: {},
       rules: {
         usefulPart: [(v) => !!v || 'Uporabni dio je obavezan'],
         bioactiveSubstance: [(v) => !!v || 'Bioaktivna tvar je obavezna'],
@@ -185,24 +179,21 @@ export default {
       this.dialog = false;
       setTimeout(() => {
         this.editingItem = { ...this.defaultItem };
-        this.errors = [];
+        this.errors = {};
         this.$refs.form.resetValidation();
       }, 300);
     },
 
     async save() {
-      this.errors = [];
       try {
-        if (this.editingItem.usefulPartId) {
-          await this.addBioactiveSubstance(this.editingItem);
-          this.close();
-        } else {
-          this.errors.push({
-            message: 'Uporabni dio je obavezan',
-          });
-        }
+        await this.addBioactiveSubstance(this.editingItem);
+        this.close();
       } catch (error) {
-        this.errors = error.response.data.data;
+        this.errors = error.response.data.errors.reduce((map, object) => {
+          const value = map;
+          value[object.param] = object.msg;
+          return value;
+        }, {});
       }
     },
   },

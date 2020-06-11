@@ -28,7 +28,7 @@
                       <v-list-item-title>Uporabni dijelovi</v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
-                  <v-list-item link color="green">
+                  <v-list-item link :to="{name: 'UsefulPartImages'}" color="green">
                     <v-list-item-content>
                       <v-list-item-title>Slike uporabnih dijelova</v-list-item-title>
                     </v-list-item-content>

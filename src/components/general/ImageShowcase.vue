@@ -3,12 +3,12 @@
     <v-card>
       <v-card-title>
         <v-spacer></v-spacer>
-        <v-icon large @click="close">mdi-close</v-icon>
+        <v-icon large color="red" @click="close">mdi-close</v-icon>
       </v-card-title>
       <v-card-text>
         <v-container fluid>
           <v-row>
-            <v-col class="col-12 order-0 col-lg-9">
+            <v-col class="col-12 order-0 col-lg-8">
               <v-img
                 class="mx-auto"
                 aspect-ratio="1"
@@ -17,10 +17,13 @@
                 contain
               ></v-img>
             </v-col>
-            <v-col class="col-12 order-1 col-lg-3">
+            <v-col class="col-12 order-1 col-lg-4">
               <v-list-item two-line>
                 <v-list-item-content>
                   <v-list-item-title class="title">{{ image.name }}</v-list-item-title>
+                  <p class="body-1 mt-5" v-if="image.croatianName">
+                    Slika uporabnog dijela: {{image.croatianName}} / {{ image.latinName }}
+                  </p>
                   <p class="body-1 my-5">{{ descriptionSummary }}</p>
                   <a
                     @click="showSummary()"
@@ -58,6 +61,8 @@ export default {
         source: '',
         uploadDate: '',
         imageUrl: '',
+        croatianName: '',
+        latinName: '',
       },
       defaultImage: {
         name: '',
@@ -65,6 +70,8 @@ export default {
         source: '',
         uploadDate: '',
         imageUrl: '',
+        croatianName: '',
+        latinName: '',
       },
     };
   },

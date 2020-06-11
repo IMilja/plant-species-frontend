@@ -11,25 +11,20 @@
       <v-card-text>
         <v-container>
           <v-row>
-            <v-col cols="12">
-              <v-alert v-for="(error, index) in errors" :key="index" type="error">
-                <span v-for="(message, key) in error" :key="key">
-                  {{ message }}
-                </span>
-              </v-alert>
-            </v-col>
-          </v-row>
-          <v-row>
             <v-col cols="12" md="6">
               <v-text-field
                 v-model="editingItem.croatianName"
-                label="Hrvatski naziv"
+                label="Unesite hrvatski ime bilje vrste"
+                placeholder="npr. Borovica"
+                :error-messages="errors.croatianName"
               ></v-text-field>
             </v-col>
             <v-col cols="12" md="6">
               <v-text-field
                 v-model="editingItem.latinName"
-                label="Latinski naziv"
+                label="Unesite latinski ime bilje vrste"
+                placeholder="npr. Juniperus communis"
+                :error-messages="errors.latinName"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -37,7 +32,8 @@
             <v-col cols="12">
               <v-text-field
                 v-model="editingItem.synonym"
-                label="Sinonim"
+                label="Unesite sinonime"
+                placeholder="Sinonim"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -46,9 +42,11 @@
               <v-select
                 :items="genera"
                 v-model="editingItem.genusId"
-                label="Rod"
+                label="Odaberite rod kojoj biljna vrsta pripada"
+                placeholder="Rod"
                 item-text="name"
                 item-value="id"
+                :error-messages="errors.genusId"
               >
                 <template v-slot:no-data>
                   <span class="px-3 py-2">Nema podataka</span>
@@ -59,7 +57,8 @@
               <v-select
                 :items="systematists"
                 v-model="editingItem.systematistId"
-                label="Sistematičar"
+                label="Odaberite sistematičara kojoj biljna vrsta pripada"
+                placeholder="Sistematičar"
                 item-text="name"
                 item-value="id"
               >
@@ -73,7 +72,9 @@
             <v-col cols="12">
               <v-textarea
                 v-model="editingItem.description"
-                label="Opis biljne vrste"
+                label="Unesite opis biljne vrste"
+                placeholder="Ova biljna vrsta pripada"
+                :error-messages="errors.description"
               ></v-textarea>
             </v-col>
           </v-row>
@@ -114,7 +115,7 @@ export default {
         systematistId: null,
         genusId: null,
       },
-      errors: [],
+      errors: {},
       dialog: false,
     };
   },
@@ -157,28 +158,35 @@ export default {
 
     close() {
       this.dialog = false;
-      this.errors = [];
       setTimeout(() => {
         this.editingIndex = -1;
+        this.errors = {};
         this.editingItem = { ...this.defaultItem };
       }, 500);
     },
 
     async save() {
-      this.errors = [];
       if (this.editingIndex === -1) {
         try {
           await this.createPlantSpecies(this.editingItem);
           this.close();
         } catch (error) {
-          this.errors = error.response.data.data;
+          this.errors = error.response.data.errors.reduce((map, object) => {
+            const value = map;
+            value[object.param] = object.msg;
+            return value;
+          }, {});
         }
       } else {
         try {
           await this.editPlantSpecies(this.editingItem);
           this.close();
         } catch (error) {
-          this.errors = error.response.data.data;
+          this.errors = error.response.data.errors.reduce((map, object) => {
+            const value = map;
+            value[object.param] = object.msg;
+            return value;
+          }, {});
         }
       }
     },

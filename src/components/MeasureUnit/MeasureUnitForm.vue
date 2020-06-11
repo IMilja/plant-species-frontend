@@ -12,22 +12,14 @@
       <v-card-text>
         <v-form ref="form" :lazy-validation="true">
           <v-container>
-            <v-row v-if="errors.length">
-              <v-col cols="12">
-                <v-alert v-for="(error, index) in errors" :key="index" type="error">
-                  <span v-for="(message, key) in error" :key="key">
-                    {{ message }}
-                  </span>
-                </v-alert>
-              </v-col>
-            </v-row>
             <v-row>
               <v-col>
                 <v-text-field
                   v-model.trim="editingItem.name"
                   label="Unesite naziv mjerne jednice"
-                  placeholder="Mjerna jednica"
+                  placeholder="npr. mg"
                   :rules="rules.name"
+                  :error-messages="errors.name"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -62,7 +54,7 @@ export default {
       rules: {
         name: [(v) => !!v || 'Polje naziv je obavezno'],
       },
-      errors: [],
+      errors: {},
     };
   },
 
@@ -75,18 +67,21 @@ export default {
       this.dialog = false;
       setTimeout(() => {
         this.editingItem = { ...this.defaultItem };
-        this.errors = [];
+        this.errors = {};
         this.$refs.form.resetValidation();
       }, 300);
     },
 
     async save() {
-      this.errors = [];
       try {
         await this.createMeasureUnit(this.editingItem);
         this.close();
       } catch (error) {
-        this.errors = error.response.data.data;
+        this.errors = error.response.data.errors.reduce((map, object) => {
+          const value = map;
+          value[object.param] = object.msg;
+          return value;
+        }, {});
       }
     },
   },

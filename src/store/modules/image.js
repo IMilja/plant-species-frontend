@@ -23,8 +23,13 @@ export default {
   },
 
   actions: {
-    async plantSpeciesloadAll({ commit }, plantSpeciesId) {
+    async loadPlantSpeciesImages({ commit }, plantSpeciesId) {
       const response = await HTTP.get(`plant-species/${plantSpeciesId}/images`);
+      commit('SET_IMAGES', response.data.data);
+    },
+
+    async loadUsefulPartImages({ commit }, plantSpeciesId) {
+      const response = await HTTP.get(`images/?plantSpeciesId=${plantSpeciesId}`);
       commit('SET_IMAGES', response.data.data);
     },
 
@@ -33,6 +38,14 @@ export default {
       Object.keys(image).forEach((key) => formData.append(key, image[key]));
 
       const response = await HTTP.post(`plant-species/${plantSpeciesId}/images`, formData);
+      commit('ADD_IMAGE', response.data.data);
+    },
+
+    async addUsefulPartImage({ commit }, { plantSpeciesId, usefulPartId, image }) {
+      const formData = new FormData();
+      Object.keys(image).forEach((key) => formData.append(key, image[key]));
+
+      const response = await await HTTP.post(`plant-parts/${plantSpeciesId}/${usefulPartId}/images`, formData);
       commit('ADD_IMAGE', response.data.data);
     },
 

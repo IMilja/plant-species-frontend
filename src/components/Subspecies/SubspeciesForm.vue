@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="dialog" max-width="500px">
     <template v-slot:activator="{ on }">
-      <v-btn color="green" dark class="mb-2" v-on="on">Unos podvrste</v-btn>
+      <v-btn color="green" dark v-on="on">Unos podvrste</v-btn>
     </template>
     <v-card>
       <v-card-title>
@@ -46,6 +46,7 @@ export default {
         name: '',
         plantSpeciesId: this.$route.params.id,
       },
+      errors: {},
     };
   },
 
@@ -83,14 +84,22 @@ export default {
           await this.createSubspecies(this.editingItem);
           this.close();
         } catch (error) {
-          console.log(error);
+          this.errors = error.response.data.errors.reduce((map, object) => {
+            const value = map;
+            value[object.param] = object.msg;
+            return value;
+          }, {});
         }
       } else {
         try {
           await this.editSubspecies(this.editingItem);
           this.close();
         } catch (error) {
-          console.log(error);
+          this.errors = error.response.data.errors.reduce((map, object) => {
+            const value = map;
+            value[object.param] = object.msg;
+            return value;
+          }, {});
         }
       }
     },

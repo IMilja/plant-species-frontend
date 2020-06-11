@@ -3,7 +3,9 @@
     <v-row>
       <v-col>
         <image-showcase ref="imageShowcase"></image-showcase>
-        <upload-form></upload-form>
+        <upload-form
+          upload-form-type="usefulPart"
+        ></upload-form>
       </v-col>
       <v-spacer></v-spacer>
     </v-row>
@@ -56,7 +58,7 @@ import UploadForm from '@/components/general/UploadForm.vue';
 import ImageShowcase from '@/components/general/ImageShowcase.vue';
 
 export default {
-  name: 'PlantSpeciesImages',
+  name: 'UsefulPartImages',
 
   components: {
     UploadForm,
@@ -83,7 +85,7 @@ export default {
 
   methods: {
     ...mapActions({
-      loadImages: 'image/loadPlantSpeciesImages',
+      loadImages: 'image/loadUsefulPartImages',
     }),
 
     openImage(image) {

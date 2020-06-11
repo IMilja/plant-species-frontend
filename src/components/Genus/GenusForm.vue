@@ -13,18 +13,11 @@
           <v-container>
             <v-row>
               <v-col>
-                <v-alert v-for="(error, index) in errors" :key="index" type="error">
-                  <span v-for="(message, key) in error" :key="key">
-                    {{ message }}
-                  </span>
-                </v-alert>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col>
                 <v-text-field
                   v-model="editingItem.name"
-                  label="Naziv roda"
+                  label="Unesite naziv roda"
+                  placeholder="npr. Kumin"
+                  :error-messages="errors.name"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -36,6 +29,7 @@
                   label="Botanička porodica"
                   item-text="croatianName"
                   item-value="id"
+                  :error-messages="errors.botanicalFamilyId"
                 >
                   <template v-slot:no-data>
                     <span class="px-3 py-2">Nema podataka</span>
@@ -59,7 +53,7 @@
 import { mapState, mapActions } from 'vuex';
 
 export default {
-  name: 'SubspeciesForm',
+  name: 'GenusForm',
 
   data() {
     return {
@@ -77,7 +71,7 @@ export default {
         name: [(v) => !!v || 'Polje naziv je obavezno'],
         botanicalFamilyId: [(v) => !!v || 'Odaberite botaničku porodicu'],
       },
-      errors: [],
+      errors: {},
     };
   },
 
@@ -112,10 +106,10 @@ export default {
 
     close() {
       this.dialog = false;
-      this.errors = [];
-      this.$refs.form.resetValidation();
       setTimeout(() => {
         this.editingIndex = -1;
+        this.errors = {};
+        this.$refs.form.resetValidation();
         this.editingItem = { ...this.defaultItem };
       }, 300);
     },
@@ -126,14 +120,22 @@ export default {
           await this.createGenus(this.editingItem);
           this.close();
         } catch (error) {
-          this.errors = error.response.data.data;
+          this.errors = error.response.data.errors.reduce((map, object) => {
+            const value = map;
+            value[object.param] = object.msg;
+            return value;
+          }, {});
         }
       } else {
         try {
           await this.editGenus(this.editingItem);
           this.close();
         } catch (error) {
-          this.errors = error.response.data.data;
+          this.errors = error.response.data.errors.reduce((map, object) => {
+            const value = map;
+            value[object.param] = object.msg;
+            return value;
+          }, {});
         }
       }
     },

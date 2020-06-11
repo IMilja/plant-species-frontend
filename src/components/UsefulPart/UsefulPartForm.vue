@@ -11,33 +11,29 @@
       <v-card-text>
         <v-form ref="form" :lazy-validation="true">
           <v-container>
-            <v-row v-if="errors.length">
+            <v-row v-if="editingIndex === -1">
               <v-col>
-                <v-alert v-for="(error, index) in errors" :key="index" type="error">
-                  <span v-for="(message, key) in error" :key="key">
-                    {{ message }}
-                  </span>
-                </v-alert>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col v-if="editingIndex === -1">
                 <v-select
                   :items="availableUsefulParts"
                   v-model="editingItem.usefulPartId"
-                  label="Uporabni dio"
+                  label="Odaberite uporabni dio"
+                  placeholder="Uporabni dio"
                   item-text="croatianName"
                   item-value="id"
+                  :error-messages="errors.usefulPartId"
                 >
                   <template v-slot:no-data>
                     <span class="px-3 py-2">Nema podataka</span>
                   </template>
                 </v-select>
               </v-col>
+            </v-row>
+            <v-row>
               <v-col>
                 <v-textarea
                   v-model="editingItem.description"
-                  label="Opis uporabnog dijela"
+                  label="Unesite opis uporabnog dijela"
+                  placeholder="Opis uporabnog dijela"
                 ></v-textarea>
               </v-col>
             </v-row>
@@ -54,7 +50,6 @@
 </template>
 
 <script>
-// TODO: Error Handling
 import { mapState, mapActions } from 'vuex';
 
 export default {
@@ -74,7 +69,7 @@ export default {
         plantSpeciesId: this.$route.params.id,
         description: '',
       },
-      errors: [],
+      errors: {},
       rules: {
         usefulPart: [(v) => !!v || 'Uporabni dio je obavezan'],
       },
@@ -123,26 +118,34 @@ export default {
       this.dialog = false;
       setTimeout(() => {
         this.editingIndex = -1;
-        this.errors = [];
+        this.errors = {};
         this.editingItem = { ...this.defaultItem };
       }, 300);
     },
 
     async save() {
-      this.errors = [];
       if (this.editingIndex === -1) {
         try {
           await this.addUsefulPart(this.editingItem);
           this.close();
         } catch (error) {
-          this.errors = error.response.data.data;
+          console.log(error);
+          this.errors = error.response.data.errors.reduce((map, object) => {
+            const value = map;
+            value[object.param] = object.msg;
+            return value;
+          }, {});
         }
       } else {
         try {
           await this.editUsefulPart(this.editingItem);
           this.close();
         } catch (error) {
-          this.errors = error.response.data.data;
+          this.errors = error.response.data.errors.reduce((map, object) => {
+            const value = map;
+            value[object.param] = object.msg;
+            return value;
+          }, {});
         }
       }
     },

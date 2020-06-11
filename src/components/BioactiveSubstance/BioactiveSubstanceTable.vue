@@ -9,7 +9,7 @@
     </v-row>
     <v-row v-if="!loading">
       <v-col v-if="!bioactiveSubstances.length">
-        <p class="headline text-center mt-5">Nema bioaktivnih substanci</p>
+        <p class="headline text-center mt-5">Nema bioaktivnih tvari</p>
       </v-col>
       <v-col v-if="bioactiveSubstances.length">
         <v-data-table
