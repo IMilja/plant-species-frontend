@@ -13,7 +13,9 @@
           <v-col>
             <v-text-field
               v-model="editingItem.name"
-              label="Naziv"
+              label="Unesite naziv podvrste"
+              placeholder="Podvrsta"
+              :error-messages="errors.name"
             ></v-text-field>
           </v-col>
         </v-container>
@@ -28,7 +30,6 @@
 </template>
 
 <script>
-// TODO: Handle Erros
 import { mapActions } from 'vuex';
 
 export default {
@@ -37,6 +38,7 @@ export default {
   data() {
     return {
       dialog: false,
+      loading: false,
       editingIndex: -1,
       editingItem: {
         name: '',
@@ -74,6 +76,7 @@ export default {
       this.dialog = false;
       setTimeout(() => {
         this.editingIndex = -1;
+        this.loading = false;
         this.editingItem = { ...this.defaultItem };
       }, 300);
     },
@@ -81,9 +84,11 @@ export default {
     async save() {
       if (this.editingIndex === -1) {
         try {
+          this.loading = true;
           await this.createSubspecies(this.editingItem);
           this.close();
         } catch (error) {
+          this.loading = false;
           this.errors = error.response.data.errors.reduce((map, object) => {
             const value = map;
             value[object.param] = object.msg;
@@ -92,9 +97,11 @@ export default {
         }
       } else {
         try {
+          this.loading = true;
           await this.editSubspecies(this.editingItem);
           this.close();
         } catch (error) {
+          this.loading = false;
           this.errors = error.response.data.errors.reduce((map, object) => {
             const value = map;
             value[object.param] = object.msg;

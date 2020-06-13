@@ -3,7 +3,7 @@
     <template v-slot:activator="{ on }">
       <v-btn color="green" dark v-on="on">Dodjeli bioaktivu tvar</v-btn>
     </template>
-    <v-card>
+    <v-card :loading="loading">
       <v-card-title>
         <span class="headline">Dodjela bioaktivne tvari</span>
       </v-card-title>
@@ -109,12 +109,11 @@
 </template>
 
 <script>
-// TODO: Loader on post request
 import { mapState, mapActions } from 'vuex';
 import BioactiveSubstanceForm from '@/components/BioactiveSubstance/BioactiveSubstanceForm.vue';
 
 export default {
-  name: 'BioactiveSubstanceAssignment',
+  name: 'BioactiveSubstanceAssignForm',
 
   components: {
     BioactiveSubstanceForm,
@@ -123,6 +122,7 @@ export default {
   data() {
     return {
       dialog: false,
+      loading: false,
       editingItem: {
         plantSpeciesId: this.$route.params.id,
         usefulPartId: null,
@@ -178,6 +178,7 @@ export default {
     close() {
       this.dialog = false;
       setTimeout(() => {
+        this.loading = false;
         this.editingItem = { ...this.defaultItem };
         this.errors = {};
         this.$refs.form.resetValidation();
@@ -186,9 +187,11 @@ export default {
 
     async save() {
       try {
+        this.loading = true;
         await this.addBioactiveSubstance(this.editingItem);
         this.close();
       } catch (error) {
+        this.loading = false;
         this.errors = error.response.data.errors.reduce((map, object) => {
           const value = map;
           value[object.param] = object.msg;
@@ -199,7 +202,3 @@ export default {
   },
 };
 </script>
-
-<style>
-
-</style>

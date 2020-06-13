@@ -11,15 +11,14 @@
       <v-col v-if="!subspecies.length">
         <p class="headline text-center mt-5">Nema podvrsta</p>
       </v-col>
-      <v-col v-if="subspecies.length">
+      <v-col v-if="subspecies.length" cols="10">
         <v-data-table
           :headers="headers"
           :items="subspecies"
-          :hide-default-footer="true"
           flat
         >
           <template v-slot:item.actions="{ item }">
-            <v-btn x-small dark color="green lighten-1" class="elevation-0 ml-2" link
+            <v-btn x-small dark color="green lighten-1" class="elevation-0" link
               @click="editItem(item)"
             >
               Ažuriraj
@@ -50,7 +49,7 @@ import UsefulPartForm from '@/components/Subspecies/SubspeciesForm.vue';
 import ConfirmDialog from '../general/ConfirmDialog.vue';
 
 export default {
-  name: 'UsefulPartTable',
+  name: 'SubspeciesTable',
 
   components: {
     UsefulPartForm,
@@ -69,7 +68,7 @@ export default {
         },
         {
           text: 'Akcije',
-          align: 'center',
+          align: 'end',
           sortable: false,
           value: 'actions',
         },

@@ -12,7 +12,7 @@
       </v-toolbar>
     </template>
     <template v-slot:item.actions="{ item }">
-      <v-btn x-small dark color="blue" class="elevation-0 ml-2" link
+      <v-btn x-small dark color="blue" class="elevation-0" link
         @click="viewItem(item)"
       >
         Pogled
@@ -82,7 +82,7 @@ export default {
         },
         {
           text: 'Akcije',
-          align: 'center',
+          align: 'end',
           sortable: false,
           value: 'actions',
         },

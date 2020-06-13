@@ -46,7 +46,13 @@
       <v-toolbar-title>Kontrolna Ploča</v-toolbar-title>
 
       <v-spacer></v-spacer>
-      <v-btn class="elevation-3" :to="{ name: 'Home' }">Odjavi se</v-btn>
+      <v-btn
+        class="elevation-3"
+        color="#AF4CAB"
+        :to="{ name: 'Home' }"
+      >
+        Odjavi se
+      </v-btn>
     </v-app-bar>
 
     <v-content>
@@ -61,7 +67,7 @@ export default {
 
   data() {
     return {
-      drawer: false,
+      drawer: null,
     };
   },
 };

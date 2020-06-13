@@ -7,6 +7,7 @@
       <v-card-title>
         <span class="headline">Učitavanje nove slike</span>
       </v-card-title>
+
       <v-card-text>
         <v-form ref="form" :lazy-validation="true">
           <v-container>
@@ -84,6 +85,7 @@
                       v-model="editingItem.uploadDate"
                       :rules="rules.uploadDate"
                       v-on="on"
+                      :error-messages="errors.uploadDate"
                     ></v-text-field>
                   </template>
                   <v-date-picker v-model="editingItem.uploadDate" no-title scrollable locale="hr">
@@ -120,7 +122,6 @@
 </template>
 
 <script>
-// TODO: Create better Validation on form submit
 import { mapState, mapActions } from 'vuex';
 
 export default {
@@ -199,7 +200,8 @@ export default {
       this.dialog = false;
       setTimeout(() => {
         this.editingItem = { ...this.defaultItem };
-        this.errors = [];
+        this.errors = {};
+        this.loading = false;
         this.$refs.form.resetValidation();
         this.usefulPartId = null;
       }, 300);
@@ -211,7 +213,6 @@ export default {
 
     async save() {
       this.loading = true;
-      this.errors = [];
 
       switch (this.uploadFormType) {
         case 'plantSpecies':
@@ -222,8 +223,6 @@ export default {
             };
 
             await this.uploadPlantSpeciesImage(payload);
-
-            this.loading = false;
             this.close();
           } catch (error) {
             this.loading = false;
@@ -243,8 +242,6 @@ export default {
             };
 
             await this.uploadUsefulPartImage(payload);
-
-            this.loading = false;
             this.close();
           } catch (error) {
             this.loading = false;

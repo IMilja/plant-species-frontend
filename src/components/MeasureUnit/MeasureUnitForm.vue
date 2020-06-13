@@ -9,6 +9,7 @@
       <v-card-title>
         <span class="headline">Mjerna jedinica</span>
       </v-card-title>
+
       <v-card-text>
         <v-form ref="form" :lazy-validation="true">
           <v-container>
@@ -36,7 +37,6 @@
 </template>
 
 <script>
-// TODO: Loader on post request
 import { mapActions } from 'vuex';
 
 export default {
@@ -45,6 +45,7 @@ export default {
   data() {
     return {
       dialog: false,
+      loading: false,
       editingItem: {
         name: '',
       },
@@ -68,15 +69,18 @@ export default {
       setTimeout(() => {
         this.editingItem = { ...this.defaultItem };
         this.errors = {};
+        this.loading = false;
         this.$refs.form.resetValidation();
       }, 300);
     },
 
     async save() {
       try {
+        this.loading = true;
         await this.createMeasureUnit(this.editingItem);
         this.close();
       } catch (error) {
+        this.loading = false;
         this.errors = error.response.data.errors.reduce((map, object) => {
           const value = map;
           value[object.param] = object.msg;

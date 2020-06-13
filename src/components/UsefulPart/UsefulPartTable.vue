@@ -11,17 +11,16 @@
       <v-col v-if="!usefulParts.length">
         <p class="headline text-center mt-5">Nema uporabnih dijelova</p>
       </v-col>
-      <v-col v-if="usefulParts.length">
+      <v-col v-if="usefulParts.length" cols="10">
         <v-data-table
           :headers="headers"
           :items="usefulParts"
-          :hide-default-footer="true"
           :expanded.sync="expanded"
           show-expand
           flat
         >
           <template v-slot:item.actions="{ item }">
-            <v-btn x-small dark color="green lighten-1" class="elevation-0 ml-2" link
+            <v-btn x-small dark color="green lighten-1" class="elevation-0" link
               @click="editItem(item)"
             >
               Ažuriraj opis
@@ -81,7 +80,7 @@ export default {
         },
         {
           text: 'Akcije',
-          align: 'center',
+          align: 'end',
           sortable: false,
           value: 'actions',
         },

@@ -21,18 +21,23 @@
 
 <script>
 export default {
-  data: () => ({
-    dialog: false,
-    resolve: null,
-    reject: null,
-    message: null,
-    title: null,
-    options: {
-      color: 'blue',
-      width: 350,
-      zIndex: 200,
-    },
-  }),
+  name: 'ConfirmDialog',
+
+  data() {
+    return {
+      dialog: false,
+      resolve: null,
+      reject: null,
+      message: null,
+      title: null,
+      options: {
+        color: 'blue',
+        width: 350,
+        zIndex: 200,
+      },
+    };
+  },
+
   methods: {
     open(title, message, options) {
       this.dialog = true;

@@ -7,7 +7,7 @@
     </v-row>
     <v-row>
       <v-spacer></v-spacer>
-      <v-col cols="12" md="6">
+      <v-col cols="12" md="9">
         <v-divider></v-divider>
         <genus-table></genus-table>
       </v-col>

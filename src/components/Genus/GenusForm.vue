@@ -3,7 +3,7 @@
     <template v-slot:activator="{ on }">
       <v-btn color="green" dark class="mb-2" v-on="on">Unesi novi rod</v-btn>
     </template>
-    <v-card>
+    <v-card :loading="loading">
       <v-card-title>
         <span class="headline">{{ formTitle }}</span>
       </v-card-title>
@@ -26,11 +26,30 @@
                 <v-select
                   :items="botanicalFamilies"
                   v-model="editingItem.botanicalFamilyId"
-                  label="Botanička porodica"
+                  label="Odaberite botaničku porodicu"
+                  placeholder="Botanička porodica"
                   item-text="croatianName"
                   item-value="id"
                   :error-messages="errors.botanicalFamilyId"
                 >
+                  <template v-slot:item="{ item, attrs, on }">
+                    <v-list-item
+                      v-bind="attrs"
+                      v-on="on"
+                    >
+                      <v-list-item-content>
+                        <v-list-item-title
+                          :id="attrs['aria-labelledby']"
+                          v-text="item.croatianName"
+                        ></v-list-item-title>
+
+                        <v-list-item-subtitle
+                          class="overline mt-1"
+                          v-text="item.latinName">
+                        </v-list-item-subtitle>
+                      </v-list-item-content>
+                    </v-list-item>
+                  </template>
                   <template v-slot:no-data>
                     <span class="px-3 py-2">Nema podataka</span>
                   </template>
@@ -58,6 +77,7 @@ export default {
   data() {
     return {
       dialog: false,
+      loading: false,
       editingIndex: -1,
       editingItem: {
         name: '',
@@ -109,6 +129,7 @@ export default {
       setTimeout(() => {
         this.editingIndex = -1;
         this.errors = {};
+        this.loading = false;
         this.$refs.form.resetValidation();
         this.editingItem = { ...this.defaultItem };
       }, 300);
@@ -117,9 +138,11 @@ export default {
     async save() {
       if (this.editingIndex === -1) {
         try {
+          this.loading = true;
           await this.createGenus(this.editingItem);
           this.close();
         } catch (error) {
+          this.loading = false;
           this.errors = error.response.data.errors.reduce((map, object) => {
             const value = map;
             value[object.param] = object.msg;
@@ -128,9 +151,11 @@ export default {
         }
       } else {
         try {
+          this.loading = true;
           await this.editGenus(this.editingItem);
           this.close();
         } catch (error) {
+          this.loading = false;
           this.errors = error.response.data.errors.reduce((map, object) => {
             const value = map;
             value[object.param] = object.msg;

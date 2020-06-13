@@ -5,7 +5,7 @@
         <v-icon>mdi-plus</v-icon><span class="d-none d-sm-inline">Dodaj novu</span>
       </v-btn>
     </template>
-    <v-card>
+    <v-card :loading="loading">
       <v-card-title>
         <span class="headline">Unos bioaktivne tvari</span>
       </v-card-title>
@@ -72,6 +72,7 @@ export default {
   data() {
     return {
       dialog: false,
+      loading: false,
       editingItem: {
         name: '',
         measureUnitId: null,
@@ -109,6 +110,7 @@ export default {
     close() {
       this.dialog = false;
       setTimeout(() => {
+        this.loading = false;
         this.editingItem = { ...this.defaultItem };
         this.errors = {};
         this.$refs.form.resetValidation();
@@ -117,9 +119,11 @@ export default {
 
     async save() {
       try {
+        this.loading = true;
         await this.createBioactiveSubstance(this.editingItem);
         this.close();
       } catch (error) {
+        this.loading = false;
         this.errors = error.response.data.errors.reduce((map, object) => {
           const value = map;
           value[object.param] = object.msg;

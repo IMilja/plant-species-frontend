@@ -11,11 +11,10 @@
       <v-col v-if="!bioactiveSubstances.length">
         <p class="headline text-center mt-5">Nema bioaktivnih tvari</p>
       </v-col>
-      <v-col v-if="bioactiveSubstances.length">
+      <v-col v-if="bioactiveSubstances.length" cols="10">
         <v-data-table
           :headers="headers"
           :items="bioactiveSubstances"
-          :hide-default-footer="true"
           flat
         >
           <template v-slot:item.actions="{ item }">
@@ -87,7 +86,7 @@ export default {
         },
         {
           text: 'Akcije',
-          align: 'center',
+          align: 'end',
           sortable: false,
           value: 'actions',
         },

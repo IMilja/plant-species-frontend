@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="dialog" max-width="500px">
     <template v-slot:activator="{ on }">
-      <v-btn color="green" dark class="mb-2" v-on="on">Dodijeli uporabni dio</v-btn>
+      <v-btn color="green" dark v-on="on">Dodijeli uporabni dio</v-btn>
     </template>
     <v-card>
       <v-card-title>
@@ -22,6 +22,24 @@
                   item-value="id"
                   :error-messages="errors.usefulPartId"
                 >
+                  <template v-slot:item="{ item, attrs, on }">
+                    <v-list-item
+                      v-bind="attrs"
+                      v-on="on"
+                    >
+                      <v-list-item-content>
+                        <v-list-item-title
+                          :id="attrs['aria-labelledby']"
+                          v-text="item.croatianName"
+                        ></v-list-item-title>
+
+                        <v-list-item-subtitle
+                          class="overline mt-1"
+                          v-text="item.latinName">
+                        </v-list-item-subtitle>
+                      </v-list-item-content>
+                    </v-list-item>
+                  </template>
                   <template v-slot:no-data>
                     <span class="px-3 py-2">Nema podataka</span>
                   </template>
@@ -58,6 +76,7 @@ export default {
   data() {
     return {
       dialog: false,
+      loading: false,
       editingIndex: -1,
       editingItem: {
         usefulPartId: null,
@@ -119,6 +138,7 @@ export default {
       setTimeout(() => {
         this.editingIndex = -1;
         this.errors = {};
+        this.loading = false;
         this.editingItem = { ...this.defaultItem };
       }, 300);
     },
@@ -126,10 +146,11 @@ export default {
     async save() {
       if (this.editingIndex === -1) {
         try {
+          this.loading = true;
           await this.addUsefulPart(this.editingItem);
           this.close();
         } catch (error) {
-          console.log(error);
+          this.loading = false;
           this.errors = error.response.data.errors.reduce((map, object) => {
             const value = map;
             value[object.param] = object.msg;
@@ -138,9 +159,11 @@ export default {
         }
       } else {
         try {
+          this.loading = true;
           await this.editUsefulPart(this.editingItem);
           this.close();
         } catch (error) {
+          this.loading = false;
           this.errors = error.response.data.errors.reduce((map, object) => {
             const value = map;
             value[object.param] = object.msg;

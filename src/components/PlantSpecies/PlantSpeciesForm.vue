@@ -1,9 +1,9 @@
 <template>
-  <v-dialog v-model="dialog" max-width="700px">
+  <v-dialog v-model="dialog" max-width="550px">
     <template v-slot:activator="{ on }">
       <v-btn color="green" dark class="mb-2" v-on="on">Unos biljne vrste</v-btn>
     </template>
-    <v-card>
+    <v-card :loading="loading">
       <v-card-title>
         <span class="headline">{{ formTitle }}</span>
       </v-card-title>
@@ -99,6 +99,7 @@ export default {
   data() {
     return {
       editingIndex: -1,
+      loading: false,
       editingItem: {
         croatianName: '',
         latinName: '',
@@ -161,6 +162,7 @@ export default {
       setTimeout(() => {
         this.editingIndex = -1;
         this.errors = {};
+        this.loading = false;
         this.editingItem = { ...this.defaultItem };
       }, 500);
     },
@@ -168,9 +170,11 @@ export default {
     async save() {
       if (this.editingIndex === -1) {
         try {
+          this.loading = true;
           await this.createPlantSpecies(this.editingItem);
           this.close();
         } catch (error) {
+          this.loading = false;
           this.errors = error.response.data.errors.reduce((map, object) => {
             const value = map;
             value[object.param] = object.msg;
@@ -179,9 +183,11 @@ export default {
         }
       } else {
         try {
+          this.loading = true;
           await this.editPlantSpecies(this.editingItem);
           this.close();
         } catch (error) {
+          this.loading = false;
           this.errors = error.response.data.errors.reduce((map, object) => {
             const value = map;
             value[object.param] = object.msg;
