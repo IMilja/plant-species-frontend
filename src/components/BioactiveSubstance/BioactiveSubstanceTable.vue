@@ -63,13 +63,13 @@ export default {
         {
           text: 'Naziv',
           align: 'start',
-          sortable: false,
+          sortable: true,
           value: 'name',
         },
         {
           text: 'Sadržaj',
           align: 'start',
-          sortable: false,
+          sortable: true,
           value: 'content',
         },
         {
@@ -110,18 +110,34 @@ export default {
     ...mapActions({
       loadBioactiveSubnstaces: 'plantSpecies/loadBioactiveSubstances',
       deleteBioactiveSubstance: 'plantSpecies/deleteBioactiveSubstance',
+      activeSnackbar: 'snackbar/activeSnackbar',
     }),
 
     async deleteItem(item) {
-      if (await this.$refs.confirm.open(
-        'Brisanje bioaktivne tvari',
-        `Jeste li sigurni da želite izbrisati bioaktivnu tvar "${item.name}" ?`,
-      )) {
-        this.deleteBioactiveSubstance({
-          plantSpeciesId: this.$route.params.id,
-          usefulPartId: item.usefulPartId,
-          bioactiveSubstanceId: item.bioactiveSubstanceId,
-        });
+      try {
+        if (await this.$refs.confirm.open(
+          'Brisanje bioaktivne tvari',
+          `Jeste li sigurni da želite izbrisati bioaktivnu tvar "${item.name}" ?`,
+        )) {
+          await this.deleteBioactiveSubstance({
+            plantSpeciesId: this.$route.params.id,
+            usefulPartId: item.usefulPartId,
+            bioactiveSubstanceId: item.bioactiveSubstanceId,
+          });
+          this.activeSnackbar({
+            color: 'success',
+            isActive: true,
+            text: `Uspješno izbrisana bioaktivna tvar "${item.name}"`,
+          });
+        }
+      } catch (error) {
+        if (error.response.status === 409) {
+          this.activeSnackbar({
+            color: 'error',
+            isActive: true,
+            text: 'Došlo je do pogreške prilikom brisanja',
+          });
+        }
       }
     },
   },

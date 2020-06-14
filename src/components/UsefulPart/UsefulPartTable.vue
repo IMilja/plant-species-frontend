@@ -104,6 +104,7 @@ export default {
     ...mapActions({
       loadUsefulParts: 'plantSpecies/loadUsefulParts',
       deleteUsefulPart: 'plantSpecies/deleteUsefulPart',
+      activeSnackbar: 'snackbar/activeSnackbar',
     }),
 
     async editItem(item) {
@@ -112,14 +113,29 @@ export default {
     },
 
     async deleteItem(item) {
-      if (await this.$refs.confirm.open(
-        'Brisanje uporabnog dijela',
-        `Jeste li sigurni da želite izbrisati uporabni dio "${item.croatianName}" ?`,
-      )) {
-        this.deleteUsefulPart({
-          plantSpeciesId: this.$route.params.id,
-          usefulPartId: item.id,
-        });
+      try {
+        if (await this.$refs.confirm.open(
+          'Brisanje uporabnog dijela',
+          `Jeste li sigurni da želite izbrisati uporabni dio "${item.croatianName}" ?`,
+        )) {
+          await this.deleteUsefulPart({
+            plantSpeciesId: this.$route.params.id,
+            usefulPartId: item.id,
+          });
+          this.activeSnackbar({
+            color: 'success',
+            isActive: true,
+            text: `Uspješno izbrisan uporabni dio "${item.croatianName}"`,
+          });
+        }
+      } catch (error) {
+        if (error.response.status === 409) {
+          this.activeSnackbar({
+            color: 'error',
+            isActive: true,
+            text: 'Došlo je do pogreške prilikom brisanja',
+          });
+        }
       }
     },
   },

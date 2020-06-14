@@ -61,9 +61,15 @@ export default {
       loading: false,
       headers: [
         {
-          text: 'Naziv',
+          text: 'ID',
           align: 'start',
           sortable: false,
+          value: 'id',
+        },
+        {
+          text: 'Naziv',
+          align: 'start',
+          sortable: true,
           value: 'name',
         },
         {
@@ -92,6 +98,7 @@ export default {
     ...mapActions({
       loadSubspecies: 'subspecies/loadAll',
       deleteSubspecies: 'subspecies/delete',
+      activeSnackbar: 'snackbar/activeSnackbar',
     }),
 
     async editItem(item) {
@@ -100,11 +107,26 @@ export default {
     },
 
     async deleteItem(item) {
-      if (await this.$refs.confirm.open(
-        'Brisanje podvrste',
-        `Jeste li sigurni da želite izbrisati podvrstu "${item.name}" ?`,
-      )) {
-        this.deleteSubspecies(item);
+      try {
+        if (await this.$refs.confirm.open(
+          'Brisanje podvrste',
+          `Jeste li sigurni da želite izbrisati podvrstu "${item.name}" ?`,
+        )) {
+          await this.deleteSubspecies(item);
+          this.activeSnackbar({
+            color: 'success',
+            isActive: true,
+            text: `Uspješno izbrisana podvrsta "${item.name}"`,
+          });
+        }
+      } catch (error) {
+        if (error.response.status === 409) {
+          this.activeSnackbar({
+            color: 'error',
+            isActive: true,
+            text: 'Došlo je do pogreške prilikom brisanja',
+          });
+        }
       }
     },
   },

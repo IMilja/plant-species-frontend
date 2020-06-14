@@ -65,11 +65,21 @@
 
     <v-content>
       <router-view></router-view>
+      <v-snackbar
+        v-model="snackbar.isActive"
+        :timeout="2500"
+        :color="snackbar.color"
+        class="text-center"
+      >
+        {{ snackbar.text }}
+      </v-snackbar>
     </v-content>
   </v-layout>
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
   name: 'Admin',
 
@@ -78,9 +88,11 @@ export default {
       drawer: null,
     };
   },
+
+  computed: {
+    ...mapState({
+      snackbar: (state) => state.snackbar.snackbar,
+    }),
+  },
 };
 </script>
-
-<style>
-
-</style>

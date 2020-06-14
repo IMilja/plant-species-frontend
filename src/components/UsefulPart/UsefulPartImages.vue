@@ -99,6 +99,7 @@ export default {
     ...mapActions({
       loadImages: 'image/loadUsefulPartImages',
       deleteImage: 'image/deleteImage',
+      activeSnackbar: 'snackbar/activeSnackbar',
     }),
 
     openImage(image) {
@@ -106,11 +107,26 @@ export default {
     },
 
     async deleteItem(item) {
-      if (await this.$refs.confirm.open(
-        'Brisanje slike',
-        `Jeste li sigurni da želite izbrisati sliku "${item.name}"`,
-      )) {
-        this.deleteImage(item);
+      try {
+        if (await this.$refs.confirm.open(
+          'Brisanje slike',
+          `Jeste li sigurni da želite izbrisati sliku "${item.name}"`,
+        )) {
+          await this.deleteImage(item);
+          this.activeSnackbar({
+            color: 'success',
+            isActive: true,
+            text: `Uspješno izbrisana uporabni dio ${item.name}`,
+          });
+        }
+      } catch (error) {
+        if (error.response.status === 409) {
+          this.activeSnackbar({
+            color: 'error',
+            isActive: true,
+            text: 'Došlo je do pogreške prilikom brisanja',
+          });
+        }
       }
     },
   },

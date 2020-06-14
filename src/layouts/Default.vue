@@ -1,22 +1,17 @@
 <template>
   <div class="fill-height bg-img">
-    <v-app-bar
-      app
-      color="green"
-      dark
-    >
+    <v-app-bar app color="green" dark>
       <v-toolbar-title>Biljne Vrste</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn color="#AF4CAB"
+      <v-btn
+        color="#AF4CAB"
         class="elevation-3"
         :to="{ name: 'PlantSpeciesHome' }"
-      >
-        Kontrolna Ploča
-      </v-btn>
+        >
+          Kontrolna Ploča
+        </v-btn>
     </v-app-bar>
-    <v-content>
-      <v-container fluid>
-      </v-container>
+    <v-content class="fill-height">
     </v-content>
   </div>
 </template>
@@ -25,14 +20,12 @@
 export default {
   name: 'Default',
 
-  methods: {
-
-  },
+  methods: {},
 };
 </script>
 
 <style>
-  .bg-img {
-    background: url('../assets/background.jpg') no-repeat center;
-  }
+.bg-img {
+  background: url("../assets/background.jpg") no-repeat center;
+}
 </style>

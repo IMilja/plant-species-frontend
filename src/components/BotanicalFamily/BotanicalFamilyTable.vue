@@ -57,13 +57,13 @@ export default {
         {
           text: 'Hrvatski naziv',
           align: 'start',
-          sortable: 'true',
+          sortable: true,
           value: 'croatianName',
         },
         {
           text: 'Latinski naziv',
           align: 'start',
-          sortable: 'false',
+          sortable: false,
           value: 'latinName',
         },
         {
@@ -94,6 +94,7 @@ export default {
     ...mapActions({
       loadBotanicalFamilies: 'botanicalFamily/loadAll',
       deleteBotanicalFamily: 'botanicalFamily/delete',
+      activeSnackbar: 'snackbar/activeSnackbar',
     }),
 
     editItem(item) {
@@ -102,11 +103,26 @@ export default {
     },
 
     async deleteItem(item) {
-      if (await this.$refs.confirm.open(
-        'Brisanje bioaktivne tvari',
-        `Jeste li sigurni da želite izbrisati bioaktivnu tvar "${item.croatianName}" ?`,
-      )) {
-        this.deleteBotanicalFamily(item);
+      try {
+        if (await this.$refs.confirm.open(
+          'Brisanje bioaktivne tvari',
+          `Jeste li sigurni da želite izbrisati bioaktivnu tvar "${item.croatianName}" ?`,
+        )) {
+          await this.deleteBotanicalFamily(item);
+          this.activeSnackbar({
+            color: 'success',
+            isActive: true,
+            text: `Uspješno izbrisana botanička porodica "${item.croatianName}"`,
+          });
+        }
+      } catch (error) {
+        if (error.response.status === 409) {
+          this.activeSnackbar({
+            color: 'error',
+            isActive: true,
+            text: 'Došlo je do pogreške prilikom brisanja',
+          });
+        }
       }
     },
   },

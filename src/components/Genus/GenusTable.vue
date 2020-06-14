@@ -93,6 +93,7 @@ export default {
     ...mapActions({
       loadGenera: 'genus/loadAll',
       deleteGenus: 'genus/delete',
+      activeSnackbar: 'snackbar/activeSnackbar',
     }),
 
     editItem(item) {
@@ -101,11 +102,26 @@ export default {
     },
 
     async deleteItem(item) {
-      if (await this.$refs.confirm.open(
-        'Brisanje biljne vrste',
-        `Jeste li sigurni da želite izbrisati rod "${item.name}"`,
-      )) {
-        this.deleteGenus(item);
+      try {
+        if (await this.$refs.confirm.open(
+          'Brisanje biljne vrste',
+          `Jeste li sigurni da želite izbrisati rod "${item.name}"`,
+        )) {
+          await this.deleteGenus(item);
+          this.activeSnackbar({
+            color: 'success',
+            isActive: true,
+            text: `Uspješno izbrisana rod "${item.name}"`,
+          });
+        }
+      } catch (error) {
+        if (error.response.status === 409) {
+          this.activeSnackbar({
+            color: 'error',
+            isActive: true,
+            text: 'Došlo je do pogreške prilikom brisanja',
+          });
+        }
       }
     },
   },

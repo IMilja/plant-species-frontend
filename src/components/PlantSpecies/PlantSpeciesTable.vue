@@ -64,13 +64,13 @@ export default {
         {
           text: 'Hrvatski naziv',
           align: 'start',
-          sortable: false,
+          sortable: true,
           value: 'croatianName',
         },
         {
           text: 'Latinski naziv',
           align: 'start',
-          sortable: false,
+          sortable: true,
           value: 'latinName',
         },
         {
@@ -106,6 +106,7 @@ export default {
     ...mapActions({
       loadPlantSpecies: 'plantSpecies/loadAll',
       deletePlantSpecies: 'plantSpecies/delete',
+      activeSnackbar: 'snackbar/activeSnackbar',
     }),
 
     viewItem(item) {
@@ -123,11 +124,26 @@ export default {
     },
 
     async deleteItem(item) {
-      if (await this.$refs.confirm.open(
-        'Brisanje biljne vrste',
-        `Jeste li sigurni da želite izbrisati biljnu vrstu "${item.croatianName}"`,
-      )) {
-        this.deletePlantSpecies(item);
+      try {
+        if (await this.$refs.confirm.open(
+          'Brisanje biljne vrste',
+          `Jeste li sigurni da želite izbrisati biljnu vrstu "${item.croatianName}"`,
+        )) {
+          await this.deletePlantSpecies(item);
+          this.activeSnackbar({
+            color: 'success',
+            isActive: true,
+            text: `Uspješno izbrisana biljna vrsta "${item.croatianName}"`,
+          });
+        }
+      } catch (error) {
+        if (error.response.status === 409) {
+          this.activeSnackbar({
+            color: 'error',
+            isActive: true,
+            text: 'Došlo je do pogreške prilikom brisanja',
+          });
+        }
       }
     },
   },
