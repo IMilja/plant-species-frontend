@@ -3,6 +3,7 @@
     <v-row>
       <v-col>
         <image-showcase ref="imageShowcase"></image-showcase>
+        <confirm-dialog ref="confirm"></confirm-dialog>
         <upload-form></upload-form>
       </v-col>
       <v-spacer></v-spacer>
@@ -18,12 +19,12 @@
         cols="6"
         sm="4"
       >
-        <v-card flat tile class="d-flex">
+        <v-card tile>
           <v-img
             :src="image.imageUrl"
             :lazy-src="image.imageUrl"
             aspect-ratio="1"
-            class="grey lighten-2 cursor-p"
+            class="grey lighten-2 cursor-p relative"
             @click="openImage(image)"
           >
             <template v-slot:placeholder>
@@ -36,6 +37,17 @@
               </v-row>
             </template>
           </v-img>
+          <v-card-actions>
+            <v-btn
+              class="mx-auto"
+              color="red"
+              small
+              text
+              @click="deleteItem(image)"
+            >
+              Izbriši sliku
+            </v-btn>
+          </v-card-actions>
         </v-card>
       </v-col>
     </v-row>
@@ -52,6 +64,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
+import ConfirmDialog from '@/components/general/ConfirmDialog.vue';
 import UploadForm from '@/components/general/UploadForm.vue';
 import ImageShowcase from '@/components/general/ImageShowcase.vue';
 
@@ -59,6 +72,7 @@ export default {
   name: 'PlantSpeciesImages',
 
   components: {
+    ConfirmDialog,
     UploadForm,
     ImageShowcase,
   },
@@ -84,10 +98,20 @@ export default {
   methods: {
     ...mapActions({
       loadImages: 'image/loadPlantSpeciesImages',
+      deleteImage: 'image/deleteImage',
     }),
 
     openImage(image) {
       this.$refs.imageShowcase.open(image);
+    },
+
+    async deleteItem(item) {
+      if (await this.$refs.confirm.open(
+        'Brisanje slike',
+        `Jeste li sigurni da želite izbrisati sliku "${item.name}"`,
+      )) {
+        this.deleteImage(item);
+      }
     },
   },
 };

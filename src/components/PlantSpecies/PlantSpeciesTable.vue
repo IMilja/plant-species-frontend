@@ -11,11 +11,16 @@
         <plant-species-form ref="form"></plant-species-form>
       </v-toolbar>
     </template>
+    <template v-slot:item.croatianName="{ item }">
+      <a @click="viewItem(item)" class="info--text">
+        {{item.croatianName}}
+      </a>
+    </template>
     <template v-slot:item.actions="{ item }">
-      <v-btn x-small dark color="blue" class="elevation-0" link
+      <v-btn x-small dark color="info" class="elevation-0" link
         @click="viewItem(item)"
       >
-        Pogled
+        Pregled
       </v-btn>
       <v-btn x-small dark color="green" class="elevation-0 ml-2" link
         @click="editItem(item)"
@@ -75,7 +80,7 @@ export default {
           value: 'synonym',
         },
         {
-          text: 'Botanička porodica',
+          text: 'Botanička porodica (hrv. naziv)',
           align: 'start',
           sortable: false,
           value: 'genus.botanicalFamily.croatianName',
@@ -85,6 +90,7 @@ export default {
           align: 'end',
           sortable: false,
           value: 'actions',
+          width: '30%',
         },
       ],
     };

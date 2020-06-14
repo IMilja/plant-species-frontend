@@ -47,7 +47,7 @@
               </v-list>
             </v-navigation-drawer>
           </v-col>
-          <v-col cols="12" md="9" class="pl-10">
+          <v-col cols="12" md="9">
             <router-view></router-view>
           </v-col>
         </v-row>
