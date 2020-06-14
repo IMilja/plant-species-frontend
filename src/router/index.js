@@ -60,6 +60,11 @@ const routes = [
         name: 'GeneraHome',
         component: () => import(/* webpackChunkName: "GeneraHome" */ '@/views/GeneraHome.vue'),
       },
+      {
+        path: 'botanicke-porodice',
+        name: 'BotanicalFamilyHome',
+        component: () => import(/* webpackChungName: "BotanicalFamilyHome" */ '@/views/BotanicalFamilyHome.vue'),
+      },
     ],
   },
   {

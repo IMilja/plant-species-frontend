@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="dialog" max-width="500px">
     <template v-slot:activator="{ on }">
-      <v-btn color="green" dark class="mb-2" v-on="on">Unesi novi rod</v-btn>
+      <v-btn color="green" dark class="mb-2" v-on="on">Unesi botaničku porodicu</v-btn>
     </template>
     <v-card :loading="loading">
       <v-card-title>
@@ -14,46 +14,21 @@
             <v-row>
               <v-col>
                 <v-text-field
-                  v-model="editingItem.name"
-                  label="Unesite naziv roda"
-                  placeholder="npr. Kumin"
-                  :error-messages="errors.name"
+                  v-model="editingItem.croatianName"
+                  label="Unesite hrvatski naziv botaničke porodice"
+                  placeholder="npr. Usnače"
+                  :error-messages="errors.croatianName"
                 ></v-text-field>
               </v-col>
             </v-row>
             <v-row>
               <v-col>
-                <v-select
-                  :items="botanicalFamilies"
-                  v-model="editingItem.botanicalFamilyId"
-                  label="Odaberite botaničku porodicu"
-                  placeholder="Botanička porodica"
-                  item-text="croatianName"
-                  item-value="id"
-                  :error-messages="errors.botanicalFamilyId"
-                >
-                  <template v-slot:item="{ item, attrs, on }">
-                    <v-list-item
-                      v-bind="attrs"
-                      v-on="on"
-                    >
-                      <v-list-item-content>
-                        <v-list-item-title
-                          :id="attrs['aria-labelledby']"
-                          v-text="item.croatianName"
-                        ></v-list-item-title>
-
-                        <v-list-item-subtitle
-                          class="overline mt-1"
-                          v-text="item.latinName">
-                        </v-list-item-subtitle>
-                      </v-list-item-content>
-                    </v-list-item>
-                  </template>
-                  <template v-slot:no-data>
-                    <span class="px-3 py-2">Nema podataka</span>
-                  </template>
-                </v-select>
+                <v-text-field
+                  v-model="editingItem.latinName"
+                  label="Unesite latinski naziv botaničke porodice"
+                  placeholder="npr. Lamiaceae"
+                  :error-messages="errors.latinName"
+                ></v-text-field>
               </v-col>
             </v-row>
           </v-container>
@@ -69,10 +44,10 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapActions } from 'vuex';
 
 export default {
-  name: 'GenusForm',
+  name: 'BotanicalFamilyForm',
 
   data() {
     return {
@@ -80,26 +55,21 @@ export default {
       loading: false,
       editingIndex: -1,
       editingItem: {
-        name: '',
-        botanicalFamilyId: null,
+        croatianName: '',
+        latinName: '',
       },
       defaultItem: {
-        name: '',
-        botanicalFamilyId: null,
+        croatianName: '',
+        latinName: '',
       },
       rules: {
-        name: [(v) => !!v || 'Polje naziv je obavezno'],
-        botanicalFamilyId: [(v) => !!v || 'Odaberite botaničku porodicu'],
+        croatianName: [(v) => !!v || 'Hrvatski naziv je obavezan'],
       },
       errors: {},
     };
   },
 
   computed: {
-    ...mapState({
-      botanicalFamilies: (state) => state.botanicalFamily.botanicalFamilies,
-    }),
-
     formTitle() {
       return this.editingIndex === -1 ? 'Unos' : 'Ažuriranje';
     },
@@ -113,17 +83,10 @@ export default {
     },
   },
 
-  created() {
-    if (!this.botanicalFamilies.length) {
-      this.loadBotanicalFamilies();
-    }
-  },
-
   methods: {
     ...mapActions({
-      createGenus: 'genus/create',
-      editGenus: 'genus/edit',
-      loadBotanicalFamilies: 'botanicalFamily/loadAll',
+      createBotancalFamily: 'botanicalFamily/create',
+      editBotancalFamily: 'botanicalFamily/edit',
     }),
 
     close() {
@@ -141,7 +104,7 @@ export default {
       if (this.editingIndex === -1) {
         try {
           this.loading = true;
-          await this.createGenus(this.editingItem);
+          await this.createBotancalFamily(this.editingItem);
           this.close();
         } catch (error) {
           this.loading = false;
@@ -154,7 +117,7 @@ export default {
       } else {
         try {
           this.loading = true;
-          await this.editGenus(this.editingItem);
+          await this.editBotancalFamily(this.editingItem);
           this.close();
         } catch (error) {
           this.loading = false;

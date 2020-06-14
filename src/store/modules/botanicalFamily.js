@@ -16,7 +16,7 @@ export default {
       state.botanicalFamilies.push(botanicalFamily);
     },
     DELETE_BOTANICAL_FAMILY(state, botanicalFamilyId) {
-      const botanicalFamilies = state.genera.filter((b) => b.id !== botanicalFamilyId);
+      const botanicalFamilies = state.botanicalFamilies.filter((b) => b.id !== botanicalFamilyId);
       state.botanicalFamilies = botanicalFamilies;
     },
     EDIT_BOTANICAL_FAMILY(state, botanicalFamily) {

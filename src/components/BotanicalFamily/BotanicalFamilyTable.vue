@@ -1,0 +1,114 @@
+<template>
+  <v-data-table
+    :headers="headers"
+    :items="botanicalFamilies"
+    :loading="loading"
+    class="mt-7 elevation-1"
+  >
+    <template v-slot:top>
+      <v-toolbar flat>
+        <v-spacer></v-spacer>
+        <confirm-dialog ref="confirm"></confirm-dialog>
+        <botanical-family-form ref="form"></botanical-family-form>
+      </v-toolbar>
+    </template>
+    <template v-slot:item.actions="{ item }">
+      <v-btn x-small dark color="green" class="elevation-0 ml-2" link
+        @click="editItem(item)"
+      >
+        Ažuriraj
+      </v-btn>
+      <v-btn x-small dark color="red lighten-1" class="elevation-0 ml-2" link
+        @click="deleteItem(item)"
+      >
+        Izbriši
+      </v-btn>
+    </template>
+    <template v-slot:no-data>
+      <span>Nema podataka</span>
+    </template>
+  </v-data-table>
+</template>
+
+<script>
+import { mapState, mapActions } from 'vuex';
+import ConfirmDialog from '@/components/general/ConfirmDialog.vue';
+import BotanicalFamilyForm from '@/components/BotanicalFamily/BotanicalFamilyForm.vue';
+
+export default {
+  name: 'BotanicalFamilyTable',
+
+
+  components: {
+    ConfirmDialog,
+    BotanicalFamilyForm,
+  },
+
+  data() {
+    return {
+      loading: false,
+      headers: [
+        {
+          text: 'ID',
+          align: 'start',
+          sortable: false,
+          value: 'id',
+        },
+        {
+          text: 'Hrvatski naziv',
+          align: 'start',
+          sortable: 'true',
+          value: 'croatianName',
+        },
+        {
+          text: 'Latinski naziv',
+          align: 'start',
+          sortable: 'false',
+          value: 'latinName',
+        },
+        {
+          text: 'Akcije',
+          align: 'end',
+          sortable: false,
+          value: 'actions',
+        },
+      ],
+    };
+  },
+
+  computed: {
+    ...mapState({
+      botanicalFamilies: (state) => state.botanicalFamily.botanicalFamilies,
+    }),
+  },
+
+  async created() {
+    if (!this.botanicalFamilies.length) {
+      this.loading = true;
+      await this.loadBotanicalFamilies();
+      this.loading = false;
+    }
+  },
+
+  methods: {
+    ...mapActions({
+      loadBotanicalFamilies: 'botanicalFamily/loadAll',
+      deleteBotanicalFamily: 'botanicalFamily/delete',
+    }),
+
+    editItem(item) {
+      const editingIndex = this.botanicalFamilies.indexOf(item);
+      this.$refs.form.edit(editingIndex, item);
+    },
+
+    async deleteItem(item) {
+      if (await this.$refs.confirm.open(
+        'Brisanje bioaktivne tvari',
+        `Jeste li sigurni da želite izbrisati bioaktivnu tvar "${item.croatianName}" ?`,
+      )) {
+        this.deleteBotanicalFamily(item);
+      }
+    },
+  },
+};
+</script>
