@@ -55,8 +55,8 @@
 
       <v-spacer></v-spacer>
       <v-btn
-        class="elevation-3"
-        color="#AF4CAB"
+        color="white"
+        text
         :to="{ name: 'Home' }"
       >
         Odjavi se

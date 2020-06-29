@@ -6,13 +6,19 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: () => import(/* webpackChunkName: "Home" */ '@/layouts/Default.vue'),
+    component: () => import(/* webpackChunkName: "HomeLayout" */ '@/layouts/Default.vue'),
+    children: [
+      {
+        path: '/',
+        name: 'Home',
+        component: () => import(/* webpackChunkName: "Homescreen" */ '@/components/Search/SearchForm.vue'),
+      },
+    ],
   },
   {
     path: '/kontrolna-ploca',
     name: 'AdminPanel',
-    component: () => import(/* webpackChunkName: "Admin" */ '@/layouts/Admin.vue'),
+    component: () => import(/* webpackChunkName: "AdminLayout" */ '@/layouts/Admin.vue'),
     children: [
       {
         path: 'biljne-vrste',
