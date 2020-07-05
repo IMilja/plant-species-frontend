@@ -9,7 +9,10 @@
       <v-spacer></v-spacer>
       <v-col cols="12" md="9">
         <v-divider></v-divider>
-        <plant-species-table></plant-species-table>
+        <plant-species-table
+          :plant-species="plantSpecies"
+          :loading="loading"
+        ></plant-species-table>
       </v-col>
       <v-spacer></v-spacer>
     </v-row>
@@ -17,6 +20,7 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex';
 import PlantSpeciesTable from '@/components/PlantSpecies/PlantSpeciesTable.vue';
 
 export default {
@@ -26,9 +30,29 @@ export default {
     PlantSpeciesTable,
   },
 
+  data() {
+    return {
+      loading: false,
+    };
+  },
+
+  computed: {
+    ...mapState({
+      plantSpecies: (state) => state.plantSpecies.plantSpecies,
+    }),
+  },
+
+  async created() {
+    this.loading = true;
+    await this.loadPlantSpecies();
+    this.loading = false;
+  },
+
+  methods: {
+    ...mapActions({
+      loadPlantSpecies: 'plantSpecies/loadAll',
+    }),
+  },
+
 };
 </script>
-
-<style>
-
-</style>

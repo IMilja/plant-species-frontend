@@ -13,19 +13,22 @@
     <v-row>
       <v-col class="col-12 col-lg-6">
         <p class="title font-weight-regular mb-2">Sistematičar</p>
-        <p class="body-1 font-weight-regular">{{ plantSpecies.systematist.name }}</p>
+        <p class="body-1 font-weight-regular">{{ systematist }}</p>
       </v-col>
       <v-col class="col-12 col-lg-6">
         <p class="title font-weight-regular mb-2">Rod</p>
-        <p class="body-1 font-weight-regular">{{ plantSpecies.genus.name }}</p>
+        <p class="body-1 font-weight-regular">{{ genus.name }}</p>
       </v-col>
     </v-row>
     <v-row>
       <v-col>
         <p class="title font-weight-regular mb-2">Botanička porodica (hrvatski / latinski naziv)</p>
-        <p class="body-1 font-weight-regular">
-          {{ plantSpecies.genus.botanicalFamily.croatianName }} /
-          {{ plantSpecies.genus.botanicalFamily.latinName }}
+        <p class="body-1 font-weight-regular" v-if="botanicalFamily">
+          {{ botanicalFamily.croatianName }} /
+          {{ botanicalFamily.latinName }}
+        </p>
+        <p class="body-1 font-weight-regular" v-else>
+          Botanička porodica nije unesena
         </p>
       </v-col>
     </v-row>
@@ -59,11 +62,23 @@ export default {
       plantSpecies: (state) => state.plantSpecies.singlePlantSpecies,
     }),
 
+    systematist() {
+      return this.plantSpecies.systematist ? this.plantSpecies.systematist.name : 'Nije unesen sistematičar';
+    },
+
+    botanicalFamily() {
+      return this.plantSpecies.genus.botanicalFamily ? this.plantSpecies.genus.botanicalFamily : '';
+    },
+
+    genus() {
+      return this.plantSpecies.genus ? this.plantSpecies.genus : 'Nije unesen rod';
+    },
+
     descriptionSummary() {
       if (this.summary && this.plantSpecies.description.length > 500) {
         return `${this.plantSpecies.description.substring(0, 500)}...`;
       }
-      return this.plantSpecies.description;
+      return this.plantSpecies.description ? this.plantSpecies.description : 'Nije unesen opis';
     },
   },
 

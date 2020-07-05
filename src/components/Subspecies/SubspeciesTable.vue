@@ -5,9 +5,9 @@
     :footer-props="{
       'items-per-page-text': 'Broj stavki po stranici'
     }"
-    flat
+    class="elevation-1"
   >
-    <template v-slot:top v-if="showForm">
+    <template v-slot:top v-if="isAdmin">
       <div class="mb-5">
         <useful-part-form ref="form"></useful-part-form>
         <confirm-dialog ref="confirm"></confirm-dialog>
@@ -45,7 +45,7 @@ export default {
   },
 
   props: {
-    showForm: {
+    isAdmin: {
       type: Boolean,
       default: true,
     },

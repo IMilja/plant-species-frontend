@@ -27,7 +27,7 @@
               </v-row>
             </template>
           </v-img>
-          <v-card-actions v-if="showForm">
+          <v-card-actions v-if="isAdmin">
             <v-btn
               class="mx-auto"
               color="red"
@@ -65,7 +65,7 @@ export default {
       type: Boolean,
       default: false,
     },
-    showForm: {
+    isAdmin: {
       type: Boolean,
       default: true,
     },

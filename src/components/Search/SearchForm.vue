@@ -35,28 +35,7 @@
         <v-tab-item value="tab-1">
           <v-card flat class="py-3 px-10">
             <v-card-text>
-              <v-text-field
-                v-model="name"
-                label="Unesite hrv/lat naziv biljne vrste"
-                placeholder="npr. Borovica"
-                color="green"
-                @keydown.enter="searchByName"
-              >
-                <template v-slot:append-outer>
-                  <v-btn
-                    dark
-                    color="green"
-                    text
-                    medium
-                    @click="searchByName"
-                  >
-                    <span class="d-none d-md-inline">Pretraži</span>
-                    <v-icon class="ml-2" medium>
-                      mdi-magnify
-                    </v-icon>
-                  </v-btn>
-                </template>
-              </v-text-field>
+              <name-search></name-search>
             </v-card-text>
           </v-card>
         </v-tab-item>
@@ -166,9 +145,15 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
+import NameSearch from '@/components/Search/NameSearch.vue';
 
 export default {
   name: 'SearchForm',
+
+
+  components: {
+    NameSearch,
+  },
 
   computed: {
     ...mapState({
@@ -181,7 +166,6 @@ export default {
   data() {
     return {
       tab: null,
-      name: '',
       selectedBotanicalFamilies: [],
       selectedBioactiveSubstances: [],
       selectedUsefulParts: [],
@@ -207,17 +191,6 @@ export default {
       loadUsefulParts: 'usefulPart/loadAll',
     }),
 
-    searchByName() {
-      if (this.name && this.name !== this.$route.query.naziv) {
-        this.$router.push({
-          name: 'SearchResult',
-          query: {
-            naziv: this.name,
-          },
-        });
-      }
-    },
-
     searchByBotanicalFamily() {
       if (this.selectedBotanicalFamilies.length) {
         this.$router.push({
@@ -225,7 +198,7 @@ export default {
           query: {
             botanickePorodice: this.selectedBotanicalFamilies.map((val) => val.id).join(','),
           },
-        });
+        }).catch(() => {});
       }
     },
 
@@ -234,9 +207,9 @@ export default {
         this.$router.push({
           name: 'SearchResult',
           query: {
-            bioaktiveTvari: this.selectedBioactiveSubstances.map((val) => val.id).join(','),
+            bioaktivneTvari: this.selectedBioactiveSubstances.map((val) => val.id).join(','),
           },
-        });
+        }).catch(() => {});
       }
     },
 
@@ -247,13 +220,9 @@ export default {
           query: {
             uporabniDijelovi: this.selectedUsefulParts.map((val) => val.id).join(','),
           },
-        });
+        }).catch(() => {});
       }
     },
   },
 };
 </script>
-
-<style>
-
-</style>

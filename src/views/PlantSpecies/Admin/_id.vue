@@ -13,32 +13,34 @@
             <v-navigation-drawer permanent>
               <v-list nav dense>
                 <v-list-item-group>
-                  <v-list-item link :to="{ name: 'PlantSpeciesView' }" color="green">
+                  <v-list-item link :to="{ name: 'AdminPlantSpeciesView' }" color="green">
                     <v-list-item-content>
                       <v-list-item-title>Osnovne informacije</v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
-                  <v-list-item link :to="{ name: 'PlantSpeciesImages' }" color="green">
+                  <v-list-item link :to="{ name: 'AdminPlantSpeciesImages' }" color="green">
                     <v-list-item-content>
                       <v-list-item-title>Slike</v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
-                  <v-list-item link :to="{ name: 'PlantSpeciesUsefulParts' }" color="green">
+                  <v-list-item link :to="{ name: 'AdminPlantSpeciesUsefulParts' }" color="green">
                     <v-list-item-content>
                       <v-list-item-title>Uporabni dijelovi</v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
-                  <v-list-item link :to="{name: 'UsefulPartImages'}" color="green">
+                  <v-list-item link :to="{name: 'AdminUsefulPartImages'}" color="green">
                     <v-list-item-content>
                       <v-list-item-title>Slike uporabnih dijelova</v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
-                  <v-list-item link :to="{ name: 'PlantSpeciesBioactiveSubstances' }" color="green">
+                  <v-list-item link :to="{ name: 'AdminPlantSpeciesBioactiveSubstances' }"
+                    color="green"
+                  >
                     <v-list-item-content>
                       <v-list-item-title>Bioaktivne tvari</v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
-                  <v-list-item link :to="{ name: 'PlantSpeciesSubspecies' }" color="green">
+                  <v-list-item link :to="{ name: 'AdminPlantSpeciesSubspecies' }" color="green">
                     <v-list-item-content>
                       <v-list-item-title>Podvrste</v-list-item-title>
                     </v-list-item-content>
@@ -69,7 +71,7 @@
 import { mapState, mapActions } from 'vuex';
 
 export default {
-  name: 'PlantSpeciesView',
+  name: 'AdminPlantSpeciesView',
 
   data() {
     return {

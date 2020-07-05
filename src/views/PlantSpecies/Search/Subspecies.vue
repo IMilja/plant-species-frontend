@@ -3,7 +3,9 @@
     <v-row v-if="!loading">
       <v-col cols="12" md="10">
         <subspecies-table
+          :headers="headers"
           :subspecies="subspecies"
+          :is-admin="false"
         ></subspecies-table>
       </v-col>
     </v-row>
@@ -23,7 +25,7 @@ import { mapState, mapActions } from 'vuex';
 import SubspeciesTable from '@/components/Subspecies/SubspeciesTable.vue';
 
 export default {
-  name: 'AdminSubspecies',
+  name: 'SearchSubspecies',
 
   components: {
     SubspeciesTable,
@@ -32,6 +34,14 @@ export default {
   data() {
     return {
       loading: false,
+      headers: [
+        {
+          text: 'Naziv',
+          align: 'start',
+          sortable: true,
+          value: 'name',
+        },
+      ],
     };
   },
 

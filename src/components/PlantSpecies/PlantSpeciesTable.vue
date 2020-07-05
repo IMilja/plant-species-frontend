@@ -2,12 +2,20 @@
   <v-data-table
     :headers="headers"
     :items="plantSpecies"
+    :loading="loading"
     :footer-props="{
       'items-per-page-text': 'Broj stavki po stranici'
     }"
-    class="mt-7 elevation-1"
+    class="mt-7"
+    :class="{ 'elevation-1' : isElevated }"
   >
-    <template v-slot:top>
+    <template v-slot:progress>
+      <v-progress-linear
+        color="green"
+        :indeterminate="true"
+      ></v-progress-linear>
+    </template>
+    <template v-slot:top v-if="isAdmin">
       <v-toolbar flat>
         <v-spacer></v-spacer>
         <confirm-dialog ref="confirm"></confirm-dialog>
@@ -43,9 +51,9 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
-import PlantSpeciesForm from './PlantSpeciesForm.vue';
-import ConfirmDialog from '../general/ConfirmDialog.vue';
+import { mapActions } from 'vuex';
+import PlantSpeciesForm from '@/components/PlantSpecies/PlantSpeciesForm.vue';
+import ConfirmDialog from '@/components/general/ConfirmDialog.vue';
 
 export default {
   name: 'PlantSpeciesTable',
@@ -55,9 +63,18 @@ export default {
     ConfirmDialog,
   },
 
-  data() {
-    return {
-      headers: [
+  props: {
+    isAdmin: {
+      type: Boolean,
+      default: true,
+    },
+    loading: {
+      type: Boolean,
+      default: false,
+    },
+    headers: {
+      type: Array,
+      default: () => [
         {
           text: 'Hrvatski naziv',
           align: 'start',
@@ -90,29 +107,39 @@ export default {
           width: '30%',
         },
       ],
-    };
-  },
-
-  computed: {
-    ...mapState({
-      plantSpecies: (state) => state.plantSpecies.plantSpecies,
-    }),
+    },
+    plantSpecies: {
+      type: Array,
+      default: () => [],
+    },
+    isElevated: {
+      type: Boolean,
+      default: true,
+    },
   },
 
   methods: {
     ...mapActions({
-      loadPlantSpecies: 'plantSpecies/loadAll',
       deletePlantSpecies: 'plantSpecies/delete',
       activeSnackbar: 'snackbar/activeSnackbar',
     }),
 
     viewItem(item) {
-      this.$router.push({
-        name: 'PlantSpeciesView',
-        params: {
-          id: item.id,
-        },
-      });
+      if (this.isAdmin) {
+        this.$router.push({
+          name: 'AdminPlantSpeciesView',
+          params: {
+            id: item.id,
+          },
+        });
+      } else {
+        this.$router.push({
+          name: 'SearchPlantSpeciesView',
+          params: {
+            id: item.id,
+          },
+        });
+      }
     },
 
     editItem(item) {
@@ -143,10 +170,6 @@ export default {
         }
       }
     },
-  },
-
-  created() {
-    this.loadPlantSpecies();
   },
 
 };
