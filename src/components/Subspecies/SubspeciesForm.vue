@@ -3,7 +3,13 @@
     <template v-slot:activator="{ on }">
       <v-btn color="green" dark v-on="on">Unos podvrste</v-btn>
     </template>
-    <v-card>
+    <v-card :loading="loading">
+      <template v-slot:progress>
+        <v-progress-linear
+          color="green"
+          :indeterminate="true"
+        ></v-progress-linear>
+      </template>
       <v-card-title>
         <span class="headline">{{ formTitle }}</span>
       </v-card-title>

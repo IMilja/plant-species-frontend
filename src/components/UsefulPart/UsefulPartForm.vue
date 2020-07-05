@@ -3,7 +3,13 @@
     <template v-slot:activator="{ on }">
       <v-btn color="green" dark v-on="on">Dodijeli uporabni dio</v-btn>
     </template>
-    <v-card>
+    <v-card :loading="loading">
+      <template v-slot:progress>
+        <v-progress-linear
+          color="green"
+          :indeterminate="true"
+        ></v-progress-linear>
+      </template>
       <v-card-title>
         <span class="headline">{{ formTitle }}</span>
       </v-card-title>
@@ -21,6 +27,7 @@
                   item-text="croatianName"
                   item-value="id"
                   :error-messages="errors.usefulPartId"
+                  color="green"
                 >
                   <template v-slot:item="{ item, attrs, on }">
                     <v-list-item
@@ -41,7 +48,7 @@
                     </v-list-item>
                   </template>
                   <template v-slot:no-data>
-                    <span class="px-3 py-2">Nema podataka</span>
+                    <span class="px-3 py-2">Nema unosa</span>
                   </template>
                 </v-select>
               </v-col>
@@ -52,6 +59,7 @@
                   v-model="editingItem.description"
                   label="Unesite opis uporabnog dijela"
                   placeholder="Opis uporabnog dijela"
+                  color="green"
                 ></v-textarea>
               </v-col>
             </v-row>

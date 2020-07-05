@@ -1,9 +1,15 @@
 <template>
   <v-dialog v-model="dialog" max-width="500px">
     <template v-slot:activator="{ on }">
-      <v-btn color="green" dark class="mb-2" v-on="on">Unesi novi rod</v-btn>
+      <v-btn color="green" dark class="mb-2" v-on="on">Unos roda</v-btn>
     </template>
     <v-card :loading="loading">
+      <template v-slot:progress>
+        <v-progress-linear
+          color="green"
+          :indeterminate="true"
+        ></v-progress-linear>
+      </template>
       <v-card-title>
         <span class="headline">{{ formTitle }}</span>
       </v-card-title>
@@ -18,6 +24,7 @@
                   label="Unesite naziv roda"
                   placeholder="npr. Kumin"
                   :error-messages="errors.name"
+                  color="green"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -31,6 +38,7 @@
                   item-text="croatianName"
                   item-value="id"
                   :error-messages="errors.botanicalFamilyId"
+                  color="green"
                 >
                   <template v-slot:item="{ item, attrs, on }">
                     <v-list-item
@@ -51,7 +59,7 @@
                     </v-list-item>
                   </template>
                   <template v-slot:no-data>
-                    <span class="px-3 py-2">Nema podataka</span>
+                    <span class="px-3 py-2">Nema unosa</span>
                   </template>
                 </v-select>
               </v-col>

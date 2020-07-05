@@ -4,6 +4,12 @@
       <v-btn color="green" dark v-on="on">Dodjeli bioaktivu tvar</v-btn>
     </template>
     <v-card :loading="loading">
+      <template v-slot:progress>
+        <v-progress-linear
+          color="green"
+          :indeterminate="true"
+        ></v-progress-linear>
+      </template>
       <v-card-title>
         <span class="headline">Dodjela bioaktivne tvari</span>
       </v-card-title>
@@ -22,6 +28,7 @@
                   item-value="id"
                   :rules="rules.bioactiveSubstance"
                   :error-messages="errors.bioactiveSubstanceId"
+                  color="green"
                 >
                   <template v-slot:item="{ item, attrs, on }">
                     <v-list-item
@@ -42,7 +49,7 @@
                     </v-list-item>
                   </template>
                   <template v-slot:no-data>
-                    <span class="px-3 py-2">Nema podataka</span>
+                    <span class="px-3 py-2">Nema unosa</span>
                   </template>
                 </v-select>
               </v-col>
@@ -58,6 +65,7 @@
                   placeholder="Količina sadržaja"
                   :rules="rules.content"
                   :error-messages="errors.content"
+                  color="green"
                 >
                 </v-text-field>
               </v-col>
@@ -71,6 +79,7 @@
                   item-value="id"
                   :rules="rules.usefulPart"
                   :error-messages="errors.usefulPartId"
+                  color="green"
                 >
                   <template v-slot:item="{ item, attrs, on }">
                     <v-list-item
@@ -91,7 +100,7 @@
                     </v-list-item>
                   </template>
                   <template v-slot:no-data>
-                    <span class="px-3 py-2">Nema podataka</span>
+                    <span class="px-3 py-2">Nema unosa</span>
                   </template>
                 </v-select>
               </v-col>

@@ -1,9 +1,15 @@
 <template>
   <v-dialog v-model="dialog" max-width="500px">
     <template v-slot:activator="{ on }">
-      <v-btn color="green" dark class="mb-2" v-on="on">Unesi botaničku porodicu</v-btn>
+      <v-btn color="green" dark class="mb-2" v-on="on">Unos botaničke porodice</v-btn>
     </template>
     <v-card :loading="loading">
+      <template v-slot:progress>
+        <v-progress-linear
+          color="green"
+          :indeterminate="true"
+        ></v-progress-linear>
+      </template>
       <v-card-title>
         <span class="headline">{{ formTitle }}</span>
       </v-card-title>
@@ -18,6 +24,7 @@
                   label="Unesite hrvatski naziv botaničke porodice"
                   placeholder="npr. Usnače"
                   :error-messages="errors.croatianName"
+                  color="green"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -28,6 +35,7 @@
                   label="Unesite latinski naziv botaničke porodice"
                   placeholder="npr. Lamiaceae"
                   :error-messages="errors.latinName"
+                  color="green"
                 ></v-text-field>
               </v-col>
             </v-row>

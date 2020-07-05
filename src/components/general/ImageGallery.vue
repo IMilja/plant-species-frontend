@@ -1,25 +1,15 @@
 <template>
-  <v-container>
+  <v-container class="pa-0">
     <v-row>
-      <v-col>
-        <image-showcase ref="imageShowcase"></image-showcase>
-        <confirm-dialog ref="confirm"></confirm-dialog>
-        <upload-form upload-form-type="usefulPart"></upload-form>
-      </v-col>
-      <v-spacer></v-spacer>
-    </v-row>
-    <v-row v-if="!loading">
-      <v-col v-if="!images.length">
-        <p class="headline text-center mt-5">Nema dodijeljenih slika</p>
-      </v-col>
       <v-col
         v-for="image in images"
         :key="image.id"
         class="d-flex child-flex"
         cols="6"
         sm="4"
+        md="3"
       >
-        <v-card tile>
+        <v-card class="elevation-2">
           <v-img
             :src="image.imageUrl"
             :lazy-src="image.imageUrl"
@@ -37,7 +27,7 @@
               </v-row>
             </template>
           </v-img>
-          <v-card-actions>
+          <v-card-actions v-if="showForm">
             <v-btn
               class="mx-auto"
               color="red"
@@ -51,53 +41,42 @@
         </v-card>
       </v-col>
     </v-row>
-    <v-row
-      v-if="loading"
-      class="fill-height ma-0"
-      align="center"
-      justify="center"
-    >
-      <v-progress-circular indeterminate color="green" size="100"></v-progress-circular>
-    </v-row>
+    <v-divider></v-divider>
+    <image-showcase ref="imageShowcase"></image-showcase>
+    <confirm-dialog ref="confirm"></confirm-dialog>
   </v-container>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapActions } from 'vuex';
 import ConfirmDialog from '@/components/general/ConfirmDialog.vue';
-import UploadForm from '@/components/general/UploadForm.vue';
 import ImageShowcase from '@/components/general/ImageShowcase.vue';
 
 export default {
-  name: 'UsefulPartImages',
+  name: 'ImageGallery',
 
   components: {
-    UploadForm,
-    ImageShowcase,
     ConfirmDialog,
+    ImageShowcase,
   },
 
-  data() {
-    return {
-      loading: false,
-    };
-  },
-
-  computed: {
-    ...mapState({
-      images: (state) => state.image.images,
-    }),
-  },
-
-  async created() {
-    this.loading = true;
-    await this.loadImages(this.$route.params.id);
-    this.loading = false;
+  props: {
+    loading: {
+      type: Boolean,
+      default: false,
+    },
+    showForm: {
+      type: Boolean,
+      default: true,
+    },
+    images: {
+      type: Array,
+      default: () => [],
+    },
   },
 
   methods: {
     ...mapActions({
-      loadImages: 'image/loadUsefulPartImages',
       deleteImage: 'image/deleteImage',
       activeSnackbar: 'snackbar/activeSnackbar',
     }),
@@ -116,7 +95,7 @@ export default {
           this.activeSnackbar({
             color: 'success',
             isActive: true,
-            text: `Uspješno izbrisana uporabni dio ${item.name}`,
+            text: `Uspješno izbrisana slika ${item.name}`,
           });
         }
       } catch (error) {

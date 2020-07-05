@@ -2,6 +2,9 @@
   <v-data-table
     :headers="headers"
     :items="genera"
+    :footer-props="{
+      'items-per-page-text': 'Broj stavki po stranici'
+    }"
     class="mt-7 elevation-1"
   >
     <template v-slot:top>
@@ -23,6 +26,9 @@
         Izbriši
       </v-btn>
     </template>
+    <template v-slot:no-data>
+      <span>Nema unesenih rodova</span>
+    </template>
   </v-data-table>
 </template>
 
@@ -43,12 +49,6 @@ export default {
     return {
       loading: false,
       headers: [
-        {
-          text: 'ID',
-          align: 'start',
-          sortable: true,
-          value: 'id',
-        },
         {
           text: 'Naziv',
           align: 'start',

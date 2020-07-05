@@ -24,7 +24,7 @@
                   <p class="body-1 mt-5" v-if="image.croatianName">
                     Slika uporabnog dijela: {{image.croatianName}} / {{ image.latinName }}
                   </p>
-                  <p class="body-1 my-5">{{ descriptionSummary }}</p>
+                  <p class="body-1 my-5 word-wrap">{{ descriptionSummary }}</p>
                   <a
                     @click="showSummary()"
                     v-if="image.description.length > 200"
@@ -121,3 +121,10 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.word-wrap{
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+</style>

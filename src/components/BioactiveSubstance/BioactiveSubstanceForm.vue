@@ -6,6 +6,12 @@
       </v-btn>
     </template>
     <v-card :loading="loading">
+      <template v-slot:progress>
+        <v-progress-linear
+          color="green"
+          :indeterminate="true"
+        ></v-progress-linear>
+      </template>
       <v-card-title>
         <span class="headline">Unos bioaktivne tvari</span>
       </v-card-title>
@@ -20,6 +26,7 @@
                   placeholder="Bioaktivna tvar"
                   :rules="rules.name"
                   :error-messages="errors.name"
+                  color="green"
                 >
                 </v-text-field>
               </v-col>
@@ -35,9 +42,10 @@
                   item-value="id"
                   :rules="rules.measureUnitId"
                   :error-messages="errors.measureUnitId"
+                  color="green"
                 >
                   <template v-slot:no-data>
-                    <span class="px-3 py-2">Nema podataka</span>
+                    <span class="px-3 py-2">Nema unosa</span>
                   </template>
                 </v-select>
               </v-col>

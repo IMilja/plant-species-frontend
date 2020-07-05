@@ -2,6 +2,9 @@
   <v-data-table
     :headers="headers"
     :items="plantSpecies"
+    :footer-props="{
+      'items-per-page-text': 'Broj stavki po stranici'
+    }"
     class="mt-7 elevation-1"
   >
     <template v-slot:top>
@@ -34,7 +37,7 @@
       </v-btn>
     </template>
     <template v-slot:no-data>
-      <span>Nema podataka</span>
+      <span>Nema unesenih biljnih vrsta</span>
     </template>
   </v-data-table>
 </template>
@@ -55,12 +58,6 @@ export default {
   data() {
     return {
       headers: [
-        {
-          text: 'ID',
-          align: 'start',
-          sortable: false,
-          value: 'id',
-        },
         {
           text: 'Hrvatski naziv',
           align: 'start',

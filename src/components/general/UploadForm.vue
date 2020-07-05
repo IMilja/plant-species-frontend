@@ -1,9 +1,17 @@
 <template>
   <v-dialog v-model="dialog" max-width="600px">
     <template v-slot:activator="{ on }">
-      <v-btn color="green" dark v-on="on">Učitaj novu sliku</v-btn>
+      <v-btn color="green" dark v-on="on">
+        Učitaj sliku {{ !isUsefulPartForm ? 'biljne vrste' : 'uporabnog dijela' }}
+      </v-btn>
     </template>
     <v-card :loading="loading">
+      <template v-slot:progress>
+        <v-progress-linear
+          color="green"
+          :indeterminate="true"
+        ></v-progress-linear>
+      </template>
       <v-card-title>
         <span class="headline">Učitavanje nove slike</span>
       </v-card-title>
@@ -19,6 +27,7 @@
                   v-model="editingItem.name"
                   :rules="rules.name"
                   :error-messages="errors.name"
+                  color="green"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" md="6" v-if="isUsefulPartForm">
@@ -30,9 +39,10 @@
                   item-text="croatianName"
                   item-value="id"
                   :error-messages="errors.usefulPartId"
+                  color="green"
                 >
                   <template v-slot:no-data>
-                    <span class="px-3 py-2">Nema podataka</span>
+                    <span class="px-3 py-2">Nema unosa</span>
                   </template>
                 </v-select>
               </v-col>
@@ -45,6 +55,7 @@
                   v-model="editingItem.imageUrl"
                   :disabled="!!editingItem.image"
                   :rules="rules.image"
+                  color="green"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" md="6">
@@ -55,6 +66,7 @@
                   :disabled="!!editingItem.imageUrl"
                   accept="image/*"
                   :rules="rules.image"
+                  color="green"
                 ></v-file-input>
               </v-col>
             </v-row>
@@ -66,6 +78,7 @@
                   v-model="editingItem.source"
                   :rules="rules.source"
                   :error-messages="errors.source"
+                  color="green"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" md="6">
@@ -86,6 +99,7 @@
                       :rules="rules.uploadDate"
                       v-on="on"
                       :error-messages="errors.uploadDate"
+                      color="green"
                     ></v-text-field>
                   </template>
                   <v-date-picker v-model="editingItem.uploadDate" no-title scrollable locale="hr">
@@ -106,6 +120,7 @@
                   label="Unesite opis slike"
                   placeholder="Slike prikazuje izgled borovice"
                   v-model="editingItem.description"
+                  color="green"
                 ></v-textarea>
               </v-col>
             </v-row>

@@ -4,6 +4,12 @@
       <v-btn color="green" dark class="mb-2" v-on="on">Unos biljne vrste</v-btn>
     </template>
     <v-card :loading="loading">
+      <template v-slot:progress>
+        <v-progress-linear
+          color="green"
+          :indeterminate="true"
+        ></v-progress-linear>
+      </template>
       <v-card-title>
         <span class="headline">{{ formTitle }}</span>
       </v-card-title>
@@ -17,6 +23,7 @@
                 label="Unesite hrvatski ime bilje vrste"
                 placeholder="npr. Borovica"
                 :error-messages="errors.croatianName"
+                color="green"
               ></v-text-field>
             </v-col>
             <v-col cols="12" md="6">
@@ -25,6 +32,7 @@
                 label="Unesite latinski ime bilje vrste"
                 placeholder="npr. Juniperus communis"
                 :error-messages="errors.latinName"
+                color="green"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -34,6 +42,7 @@
                 v-model="editingItem.synonym"
                 label="Unesite sinonime"
                 placeholder="Sinonim"
+                color="green"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -47,9 +56,10 @@
                 item-text="name"
                 item-value="id"
                 :error-messages="errors.genusId"
+                color="green"
               >
                 <template v-slot:no-data>
-                  <span class="px-3 py-2">Nema podataka</span>
+                  <span class="px-3 py-2">Nema unosa</span>
                 </template>
               </v-select>
             </v-col>
@@ -61,9 +71,10 @@
                 placeholder="Sistematičar"
                 item-text="name"
                 item-value="id"
+                color="green"
               >
                 <template v-slot:no-data>
-                  <span class="px-3 py-2">Nema podataka</span>
+                  <span class="px-3 py-2">Nema unosa</span>
                 </template>
               </v-select>
             </v-col>
@@ -75,6 +86,7 @@
                 label="Unesite opis biljne vrste"
                 placeholder="Ova biljna vrsta pripada"
                 :error-messages="errors.description"
+                color="green"
               ></v-textarea>
             </v-col>
           </v-row>

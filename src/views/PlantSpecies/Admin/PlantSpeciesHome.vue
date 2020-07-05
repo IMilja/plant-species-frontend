@@ -20,7 +20,7 @@
 import PlantSpeciesTable from '@/components/PlantSpecies/PlantSpeciesTable.vue';
 
 export default {
-  name: 'PlantSpeciesHome',
+  name: 'AdminPlantSpeciesHome',
 
   components: {
     PlantSpeciesTable,

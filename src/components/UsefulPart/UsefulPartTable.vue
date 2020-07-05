@@ -1,57 +1,45 @@
 <template>
-  <v-container>
-    <v-row>
-      <v-col>
+  <v-data-table
+    :headers="headers"
+    :items="usefulParts"
+    :expanded.sync="expanded"
+    :footer-props="{
+      'items-per-page-text': 'Broj stavki po stranici'
+    }"
+    show-expand
+    flat
+  >
+    <template v-slot:top v-if="showForm">
+      <div class="mb-5">
         <useful-part-form ref="form"></useful-part-form>
         <confirm-dialog ref="confirm"></confirm-dialog>
-      </v-col>
-      <v-spacer></v-spacer>
-    </v-row>
-    <v-row v-if="!loading">
-      <v-col v-if="!usefulParts.length">
-        <p class="headline text-center mt-5">Nema uporabnih dijelova</p>
-      </v-col>
-      <v-col v-if="usefulParts.length" cols="10">
-        <v-data-table
-          :headers="headers"
-          :items="usefulParts"
-          :expanded.sync="expanded"
-          show-expand
-          flat
-        >
-          <template v-slot:item.actions="{ item }">
-            <v-btn x-small dark color="green lighten-1" class="elevation-0" link
-              @click="editItem(item)"
-            >
-              Ažuriraj opis
-            </v-btn>
-            <v-btn x-small dark color="red lighten-1" class="elevation-0 ml-2" link
-              @click="deleteItem(item)"
-            >
-              Izbriši
-            </v-btn>
-          </template>
-          <template v-slot:expanded-item="{ headers, item }">
-            <td :colspan="headers.length" class="pa-5 text-justify">{{ item.description }}</td>
-          </template>
-        </v-data-table>
-      </v-col>
-    </v-row>
-    <v-row
-      v-if="loading"
-      class="fill-height ma-0"
-      align="center"
-      justify="center"
-    >
-      <v-progress-circular indeterminate color="green" size="100"></v-progress-circular>
-    </v-row>
-  </v-container>
+      </div>
+    </template>
+    <template v-slot:item.actions="{ item }">
+      <v-btn x-small dark color="green lighten-1" class="elevation-0" link
+        @click="editItem(item)"
+      >
+        Ažuriraj opis
+      </v-btn>
+      <v-btn x-small dark color="red lighten-1" class="elevation-0 ml-2" link
+        @click="deleteItem(item)"
+      >
+        Izbriši
+      </v-btn>
+    </template>
+    <template v-slot:expanded-item="{ headers, item }">
+      <td :colspan="headers.length" class="pl-2 py-2 text-justify">{{ item.description }}</td>
+    </template>
+    <template v-slot:no-data>
+      <span>Biljna vrsta nema dodijeljenih uporabnih dijelova</span>
+    </template>
+  </v-data-table>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapActions } from 'vuex';
 import UsefulPartForm from '@/components/UsefulPart/UsefulPartForm.vue';
-import ConfirmDialog from '../general/ConfirmDialog.vue';
+import ConfirmDialog from '@/components/general/ConfirmDialog.vue';
 
 export default {
   name: 'UsefulPartTable',
@@ -61,11 +49,18 @@ export default {
     ConfirmDialog,
   },
 
-  data() {
-    return {
-      loading: false,
-      expanded: [],
-      headers: [
+  props: {
+    showForm: {
+      type: Boolean,
+      default: true,
+    },
+    usefulParts: {
+      type: Array,
+      default: () => [],
+    },
+    headers: {
+      type: Array,
+      default: () => [
         {
           text: 'Hrvatski naziv',
           align: 'start',
@@ -85,24 +80,17 @@ export default {
           value: 'actions',
         },
       ],
+    },
+  },
+
+  data() {
+    return {
+      expanded: [],
     };
-  },
-
-  computed: {
-    ...mapState({
-      usefulParts: (state) => state.plantSpecies.usefulParts,
-    }),
-  },
-
-  async created() {
-    this.loading = true;
-    await this.loadUsefulParts(this.$route.params.id);
-    this.loading = false;
   },
 
   methods: {
     ...mapActions({
-      loadUsefulParts: 'plantSpecies/loadUsefulParts',
       deleteUsefulPart: 'plantSpecies/deleteUsefulPart',
       activeSnackbar: 'snackbar/activeSnackbar',
     }),
@@ -142,7 +130,3 @@ export default {
 
 };
 </script>
-
-<style>
-
-</style>

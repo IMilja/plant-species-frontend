@@ -3,6 +3,9 @@
     :headers="headers"
     :items="botanicalFamilies"
     :loading="loading"
+    :footer-props="{
+      'items-per-page-text': 'Broj stavki po stranici'
+    }"
     class="mt-7 elevation-1"
   >
     <template v-slot:top>
@@ -25,7 +28,7 @@
       </v-btn>
     </template>
     <template v-slot:no-data>
-      <span>Nema podataka</span>
+      <span>Nema unesenih botaničkih porodica</span>
     </template>
   </v-data-table>
 </template>
@@ -48,12 +51,6 @@ export default {
     return {
       loading: false,
       headers: [
-        {
-          text: 'ID',
-          align: 'start',
-          sortable: false,
-          value: 'id',
-        },
         {
           text: 'Hrvatski naziv',
           align: 'start',
