@@ -30,27 +30,27 @@ const routes = [
           {
             path: 'slike',
             name: 'SearchPlantSpeciesImages',
-            component: () => import(/* webpackChunkName: "PlantSpeciesImages" */ '@/views/PlantSpecies/Search/Images.vue'),
+            component: () => import(/* webpackChunkName: "SearchPlantSpeciesImages" */ '@/views/PlantSpecies/Search/Images.vue'),
           },
           {
             path: 'uporabni-dijelovi',
             name: 'SearchPlantSpeciesUsefulParts',
-            component: () => import(/* webpackChunkName: "PlantSpeciesUsefulParts" */ '@/views/PlantSpecies/Search/UsefulParts.vue'),
+            component: () => import(/* webpackChunkName: "SearchPlantSpeciesUsefulParts" */ '@/views/PlantSpecies/Search/UsefulParts.vue'),
           },
           {
             path: 'slike-uporabnih-dijelova',
             name: 'SearchUsefulPartImages',
-            component: () => import(/* webpackChunkName: "UsefulPartImages" */ '@/views/PlantSpecies/Search/UsefulPartImages.vue'),
+            component: () => import(/* webpackChunkName: "SearchUsefulPartImages" */ '@/views/PlantSpecies/Search/UsefulPartImages.vue'),
           },
           {
             path: 'bioaktivne-tvari',
             name: 'SearchPlantSpeciesBioactiveSubstances',
-            component: () => import(/* webpackChunkName: "PlantSpeciesSubspecies" */ '@/views/PlantSpecies/Search/BioactiveSubstances.vue'),
+            component: () => import(/* webpackChunkName: "SearchPlantSpeciesSubspecies" */ '@/views/PlantSpecies/Search/BioactiveSubstances.vue'),
           },
           {
             path: 'podvrste',
             name: 'SearchPlantSpeciesSubspecies',
-            component: () => import(/* webpackChunkName: "PlantSpeciesSubspecies" */ '@/views/PlantSpecies/Search/Subspecies.vue'),
+            component: () => import(/* webpackChunkName: "SearchPlantSpeciesSubspecies" */ '@/views/PlantSpecies/Search/Subspecies.vue'),
           },
         ],
       },
@@ -64,41 +64,41 @@ const routes = [
       {
         path: 'biljne-vrste',
         name: 'PlantSpeciesHome',
-        component: () => import(/* webpackChunkName: "PlantSpeciesHome" */ '@/views/PlantSpecies/Admin/PlantSpeciesHome.vue'),
+        component: () => import(/* webpackChunkName: "AdminPlantSpeciesHome" */ '@/views/PlantSpecies/Admin/PlantSpeciesHome.vue'),
       },
       {
         path: 'biljne-vrste/:id([0-9]+)',
-        component: () => import(/* webpackChunkName: "PlantSpeciesView" */ '@/views/PlantSpecies/Admin/_id.vue'),
+        component: () => import(/* webpackChunkName: "AdminPlantSpeciesView" */ '@/views/PlantSpecies/Admin/_id.vue'),
         children: [
           {
             path: 'osnovne-informacije',
             name: 'AdminPlantSpeciesView',
-            component: () => import(/* webpackChunkName: "PlantSpeciesBasicInfo" */ '@/views/PlantSpecies/Admin/BasicInformation.vue'),
+            component: () => import(/* webpackChunkName: "AdminPlantSpeciesBasicInfo" */ '@/views/PlantSpecies/Admin/BasicInformation.vue'),
           },
           {
             path: 'slike',
             name: 'AdminPlantSpeciesImages',
-            component: () => import(/* webpackChunkName: "PlantSpeciesImages" */ '@/views/PlantSpecies/Admin/Images.vue'),
+            component: () => import(/* webpackChunkName: "AdminPlantSpeciesImages" */ '@/views/PlantSpecies/Admin/Images.vue'),
           },
           {
             path: 'uporabni-dijelovi',
             name: 'AdminPlantSpeciesUsefulParts',
-            component: () => import(/* webpackChunkName: "PlantSpeciesUsefulParts" */ '@/views/PlantSpecies/Admin/UsefulParts.vue'),
+            component: () => import(/* webpackChunkName: "AdminPlantSpeciesUsefulParts" */ '@/views/PlantSpecies/Admin/UsefulParts.vue'),
           },
           {
             path: 'slike-uporabnih-dijelova',
             name: 'AdminUsefulPartImages',
-            component: () => import(/* webpackChunkName: "UsefulPartImages" */ '@/views/PlantSpecies/Admin/UsefulPartImages.vue'),
+            component: () => import(/* webpackChunkName: "AdminUsefulPartImages" */ '@/views/PlantSpecies/Admin/UsefulPartImages.vue'),
           },
           {
             path: 'bioaktivne-tvari',
             name: 'AdminPlantSpeciesBioactiveSubstances',
-            component: () => import(/* webpackChunkName: "PlantSpeciesSubspecies" */ '@/views/PlantSpecies/Admin/BioactiveSubstances.vue'),
+            component: () => import(/* webpackChunkName: "AdminPlantSpeciesSubspecies" */ '@/views/PlantSpecies/Admin/BioactiveSubstances.vue'),
           },
           {
             path: 'podvrste',
             name: 'AdminPlantSpeciesSubspecies',
-            component: () => import(/* webpackChunkName: "PlantSpeciesSubspecies" */ '@/views/PlantSpecies/Admin/Subspecies.vue'),
+            component: () => import(/* webpackChunkName: "AdminPlantSpeciesSubspecies" */ '@/views/PlantSpecies/Admin/Subspecies.vue'),
           },
         ],
       },

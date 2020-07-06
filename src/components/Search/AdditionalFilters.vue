@@ -2,14 +2,14 @@
   <v-container>
     <v-row>
       <v-col class="text-left">
-        <span class="body-1">Dodatni filteri</span>
+        <span class="body-1">Dodatno pretraži prema:</span>
       </v-col>
     </v-row>
     <v-row>
       <v-col>
         <v-select
           v-model="selectedBotanicalFamilies"
-          label="Odaberite botaničke porodice za filtriranje"
+          label="Botaničkoj porodici"
           placeholder="npr. Usnače"
           clearable
           multiple
@@ -25,7 +25,7 @@
       <v-col>
         <v-select
           v-model="selectedBioactiveSubstances"
-          label="Odaberite bioaktivne tvari za filtriranje"
+          label="Bioaktivnoj tvari"
           placeholder="npr. Eterično ulje"
           clearable
           multiple
@@ -41,7 +41,7 @@
       <v-col>
         <v-select
             v-model="selectedUsefulParts"
-            label="Odaberite uporabne dijelove za filtriranje"
+            label="Uporabnom dijelu"
             placeholder="npr. Nadzemni dio"
             clearable
             multiple
@@ -61,7 +61,7 @@
           @click="search"
           width="100%"
         >
-          Filtriraj
+          Pretraži
         </v-btn>
       </v-col>
     </v-row>
