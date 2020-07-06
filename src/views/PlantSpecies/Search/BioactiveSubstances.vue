@@ -22,7 +22,8 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
-import BioactiveSubstanceTable from '@/components/BioactiveSubstance/BioactiveSubstanceTable.vue';
+
+const BioactiveSubstanceTable = () => import('@/components/BioactiveSubstance/BioactiveSubstanceTable.vue');
 
 export default {
   name: 'SearchBioactiveSubstances',

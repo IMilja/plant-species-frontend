@@ -33,8 +33,9 @@
 
 <script>
 import { mapActions } from 'vuex';
-import UsefulPartForm from '@/components/Subspecies/SubspeciesForm.vue';
-import ConfirmDialog from '@/components/general/ConfirmDialog.vue';
+
+const UsefulPartForm = () => import('@/components/Subspecies/SubspeciesForm.vue');
+const ConfirmDialog = () => import('@/components/general/ConfirmDialog.vue');
 
 export default {
   name: 'SubspeciesTable',

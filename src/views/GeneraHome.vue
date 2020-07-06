@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import GenusTable from '@/components/Genus/GenusTable.vue';
+const GenusTable = () => import('@/components/Genus/GenusTable.vue');
 
 export default {
   name: 'GeneraHome',

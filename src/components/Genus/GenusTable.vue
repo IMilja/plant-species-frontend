@@ -34,8 +34,9 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
-import GenusForm from '@/components/Genus/GenusForm.vue';
-import ConfirmDialog from '@/components/general/ConfirmDialog.vue';
+
+const GenusForm = () => import('@/components/Genus/GenusForm.vue');
+const ConfirmDialog = () => import('@/components/general/ConfirmDialog.vue');
 
 export default {
   name: 'GenusTable',

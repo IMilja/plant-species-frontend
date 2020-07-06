@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import PlantSpeciesInformation from '@/components/PlantSpecies/Information.vue';
+const PlantSpeciesInformation = () => import('@/components/PlantSpecies/Information.vue');
 
 export default {
   name: 'SearchBasicInformation',

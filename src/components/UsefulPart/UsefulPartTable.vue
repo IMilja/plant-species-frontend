@@ -38,8 +38,9 @@
 
 <script>
 import { mapActions } from 'vuex';
-import UsefulPartForm from '@/components/UsefulPart/UsefulPartForm.vue';
-import ConfirmDialog from '@/components/general/ConfirmDialog.vue';
+
+const UsefulPartForm = () => import('@/components/UsefulPart/UsefulPartForm.vue');
+const ConfirmDialog = () => import('@/components/general/ConfirmDialog.vue');
 
 export default {
   name: 'UsefulPartTable',

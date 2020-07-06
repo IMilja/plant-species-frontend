@@ -43,14 +43,15 @@
     </v-row>
     <v-divider></v-divider>
     <image-showcase ref="imageShowcase"></image-showcase>
-    <confirm-dialog ref="confirm"></confirm-dialog>
+    <confirm-dialog ref="confirm" v-if="isAdmin"></confirm-dialog>
   </v-container>
 </template>
 
 <script>
 import { mapActions } from 'vuex';
-import ConfirmDialog from '@/components/general/ConfirmDialog.vue';
-import ImageShowcase from '@/components/general/ImageShowcase.vue';
+
+const ConfirmDialog = () => import('@/components/general/ConfirmDialog.vue');
+const ImageShowcase = () => import('@/components/general/ImageShowcase.vue');
 
 export default {
   name: 'ImageGallery',

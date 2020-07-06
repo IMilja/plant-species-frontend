@@ -66,9 +66,9 @@
 </template>
 
 <script>
-// TODO: Loader on post request
 import { mapState, mapActions } from 'vuex';
-import MeasureUnitForm from '@/components/MeasureUnit/MeasureUnitForm.vue';
+
+const MeasureUnitForm = () => import('@/components/MeasureUnit/MeasureUnitForm.vue');
 
 export default {
   name: 'BioactiveSubstanceForm',

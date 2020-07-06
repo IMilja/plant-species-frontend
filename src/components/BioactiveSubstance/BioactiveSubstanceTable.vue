@@ -33,8 +33,9 @@
 
 <script>
 import { mapActions } from 'vuex';
-import BioactiveSubstanceAssignForm from '@/components/BioactiveSubstance/BioactiveSubstanceAssignForm.vue';
-import ConfirmDialog from '@/components/general/ConfirmDialog.vue';
+
+const BioactiveSubstanceAssignForm = () => import('@/components/BioactiveSubstance/BioactiveSubstanceAssignForm.vue');
+const ConfirmDialog = () => import('@/components/general/ConfirmDialog.vue');
 
 export default {
   name: 'BioactiveSubstanceTable',

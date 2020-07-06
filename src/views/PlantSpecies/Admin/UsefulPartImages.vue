@@ -37,8 +37,9 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
-import UploadForm from '@/components/general/UploadForm.vue';
-import ImageGallery from '@/components/general/ImageGallery.vue';
+
+const UploadForm = () => import('@/components/general/UploadForm.vue');
+const ImageGallery = () => import('@/components/general/ImageGallery.vue');
 
 export default {
   name: 'AdminUsefulPartImages',

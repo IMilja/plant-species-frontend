@@ -119,7 +119,8 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
-import BioactiveSubstanceForm from '@/components/BioactiveSubstance/BioactiveSubstanceForm.vue';
+
+const BioactiveSubstanceForm = () => import('@/components/BioactiveSubstance/BioactiveSubstanceForm.vue');
 
 export default {
   name: 'BioactiveSubstanceAssignForm',

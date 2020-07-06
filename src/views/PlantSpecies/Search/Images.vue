@@ -30,7 +30,8 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
-import ImageGallery from '@/components/general/ImageGallery.vue';
+
+const ImageGallery = () => import('@/components/general/ImageGallery.vue');
 
 export default {
   name: 'SearchPlantSpeciesImages',

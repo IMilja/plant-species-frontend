@@ -52,8 +52,9 @@
 
 <script>
 import { mapActions } from 'vuex';
-import PlantSpeciesForm from '@/components/PlantSpecies/PlantSpeciesForm.vue';
-import ConfirmDialog from '@/components/general/ConfirmDialog.vue';
+
+const PlantSpeciesForm = () => import('@/components/PlantSpecies/PlantSpeciesForm.vue');
+const ConfirmDialog = () => import('@/components/general/ConfirmDialog.vue');
 
 export default {
   name: 'PlantSpeciesTable',

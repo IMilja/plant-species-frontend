@@ -22,7 +22,8 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
-import SubspeciesTable from '@/components/Subspecies/SubspeciesTable.vue';
+
+const SubspeciesTable = () => import('@/components/Subspecies/SubspeciesTable.vue');
 
 export default {
   name: 'SearchSubspecies',

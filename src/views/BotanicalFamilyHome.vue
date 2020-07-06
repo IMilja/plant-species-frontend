@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import BotanicalFamilyTable from '@/components/BotanicalFamily/BotanicalFamilyTable.vue';
+const BotanicalFamilyTable = () => import('@/components/BotanicalFamily/BotanicalFamilyTable.vue');
 
 export default {
   name: 'BotanicalFamilyHome',

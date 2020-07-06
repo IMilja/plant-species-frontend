@@ -20,12 +20,12 @@ const routes = [
       },
       {
         path: 'biljna-vrsta/:id([0-9]+)',
-        component: () => import(/* webpackChunkName; "SearchPlantSpeciesView" */ '@/views/PlantSpecies/Search/_id.vue'),
+        component: () => import(/* webpackChunkName; "PlantSpeciesView" */ '@/views/PlantSpecies/Search/_id.vue'),
         children: [
           {
             path: 'osnovne-informacije',
             name: 'SearchPlantSpeciesView',
-            component: () => import(/* webpackChunkName: "SearchPlantSpeciesView" */ '@/views/PlantSpecies/Search/BasicInformation.vue'),
+            component: () => import(/* webpackChunkName: "BasicInformation" */ '@/views/PlantSpecies/Search/BasicInformation.vue'),
           },
           {
             path: 'slike',
@@ -68,12 +68,12 @@ const routes = [
       },
       {
         path: 'biljne-vrste/:id([0-9]+)',
-        component: () => import(/* webpackChunkName: "AdminPlantSpeciesView" */ '@/views/PlantSpecies/Admin/_id.vue'),
+        component: () => import(/* webpackChunkName: "PlantSpeciesView" */ '@/views/PlantSpecies/Admin/_id.vue'),
         children: [
           {
             path: 'osnovne-informacije',
             name: 'AdminPlantSpeciesView',
-            component: () => import(/* webpackChunkName: "AdminPlantSpeciesBasicInfo" */ '@/views/PlantSpecies/Admin/BasicInformation.vue'),
+            component: () => import(/* webpackChunkName: "BasicInformation" */ '@/views/PlantSpecies/Admin/BasicInformation.vue'),
           },
           {
             path: 'slike',

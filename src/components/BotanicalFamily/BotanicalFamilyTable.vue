@@ -35,8 +35,9 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
-import ConfirmDialog from '@/components/general/ConfirmDialog.vue';
-import BotanicalFamilyForm from '@/components/BotanicalFamily/BotanicalFamilyForm.vue';
+
+const ConfirmDialog = () => import('@/components/general/ConfirmDialog.vue');
+const BotanicalFamilyForm = () => import('@/components/BotanicalFamily/BotanicalFamilyForm.vue');
 
 export default {
   name: 'BotanicalFamilyTable',

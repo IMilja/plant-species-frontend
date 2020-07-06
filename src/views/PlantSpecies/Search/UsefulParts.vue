@@ -22,7 +22,8 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
-import UsefulPartTable from '@/components/UsefulPart/UsefulPartTable.vue';
+
+const UsefulPartTable = () => import('@/components/UsefulPart/UsefulPartTable.vue');
 
 export default {
   name: 'AdminUsefulParts',

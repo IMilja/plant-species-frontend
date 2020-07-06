@@ -21,7 +21,8 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
-import PlantSpeciesTable from '@/components/PlantSpecies/PlantSpeciesTable.vue';
+
+const PlantSpeciesTable = () => import('@/components/PlantSpecies/PlantSpeciesTable.vue');
 
 export default {
   name: 'AdminPlantSpeciesHome',

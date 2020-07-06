@@ -37,9 +37,10 @@
 
 <script>
 import HTTP from '@/http-common.js';
-import PlantSpeciesTable from '@/components/PlantSpecies/PlantSpeciesTable.vue';
-import NameSearch from '@/components/Search/NameSearch.vue';
-import AdditionalFilters from '@/components/Search/AdditionalFilters.vue';
+
+const PlantSpeciesTable = () => import('@/components/PlantSpecies/PlantSpeciesTable.vue');
+const NameSearch = () => import('@/components/Search/NameSearch.vue');
+const AdditionalFilters = () => import('@/components/Search/AdditionalFilters.vue');
 
 export default {
   name: 'PlantSpeciesHome',

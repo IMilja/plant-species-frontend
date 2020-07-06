@@ -145,7 +145,8 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
-import NameSearch from '@/components/Search/NameSearch.vue';
+
+const NameSearch = () => import('@/components/Search/NameSearch.vue');
 
 export default {
   name: 'SearchForm',
