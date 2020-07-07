@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto" max-width="1750px" min-height="800px">
+  <v-card class="mx-auto" max-width="1750px" min-height="800px" width="100%">
     <v-container>
       <v-row class="justify-center px-5">
         <v-col>
