@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto" max-width="55%">
+  <v-card class="mx-auto" max-width="850px" width="100%">
     <v-card-title>
       <h1 class="mx-auto mt-5 text-uppercase">Pretraga biljnih vrsta</h1>
     </v-card-title>

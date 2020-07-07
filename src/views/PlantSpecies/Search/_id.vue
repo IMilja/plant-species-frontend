@@ -1,6 +1,6 @@
 <template>
   <v-card class="mx-auto" max-width="1750px" min-height="800px">
-    <v-container class="mt-5">
+    <v-container class="mt-5" fluid>
       <v-row v-if="!loading">
         <v-col>
           <h2 class="font-weight-bold display-2 text-center">{{ plantSpecies.croatianName }}</h2>
@@ -74,6 +74,7 @@ export default {
   data() {
     return {
       loading: false,
+      activeBtn: null,
     };
   },
 

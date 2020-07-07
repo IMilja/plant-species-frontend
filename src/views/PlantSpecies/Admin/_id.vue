@@ -1,70 +1,66 @@
 <template>
-  <v-container class="mt-5">
-    <v-row v-if="!loading">
-      <v-col>
-        <h2 class="font-weight-bold display-2 text-center">{{ plantSpecies.croatianName }}</h2>
-      </v-col>
-    </v-row>
-    <v-row v-if="!loading">
-      <v-spacer></v-spacer>
-      <v-col cols="10">
-        <v-row>
-          <v-col cols="12" md="3">
-            <v-navigation-drawer permanent>
-              <v-list nav dense>
-                <v-list-item-group>
-                  <v-list-item link :to="{ name: 'AdminPlantSpeciesView' }" color="green">
-                    <v-list-item-content>
-                      <v-list-item-title>Osnovne informacije</v-list-item-title>
-                    </v-list-item-content>
-                  </v-list-item>
-                  <v-list-item link :to="{ name: 'AdminPlantSpeciesImages' }" color="green">
-                    <v-list-item-content>
-                      <v-list-item-title>Slike</v-list-item-title>
-                    </v-list-item-content>
-                  </v-list-item>
-                  <v-list-item link :to="{ name: 'AdminPlantSpeciesUsefulParts' }" color="green">
-                    <v-list-item-content>
-                      <v-list-item-title>Uporabni dijelovi</v-list-item-title>
-                    </v-list-item-content>
-                  </v-list-item>
-                  <v-list-item link :to="{name: 'AdminUsefulPartImages'}" color="green">
-                    <v-list-item-content>
-                      <v-list-item-title>Slike uporabnih dijelova</v-list-item-title>
-                    </v-list-item-content>
-                  </v-list-item>
-                  <v-list-item link :to="{ name: 'AdminPlantSpeciesBioactiveSubstances' }"
-                    color="green"
-                  >
-                    <v-list-item-content>
-                      <v-list-item-title>Bioaktivne tvari</v-list-item-title>
-                    </v-list-item-content>
-                  </v-list-item>
-                  <v-list-item link :to="{ name: 'AdminPlantSpeciesSubspecies' }" color="green">
-                    <v-list-item-content>
-                      <v-list-item-title>Podvrste</v-list-item-title>
-                    </v-list-item-content>
-                  </v-list-item>
-                </v-list-item-group>
-              </v-list>
-            </v-navigation-drawer>
-          </v-col>
-          <v-col cols="12" md="9">
-            <router-view></router-view>
-          </v-col>
-        </v-row>
-      </v-col>
-      <v-spacer></v-spacer>
-    </v-row>
-    <v-row
-      v-if="loading"
-      class="fill-height ma-0"
-      align="center"
-      justify="center"
-    >
-      <v-progress-circular indeterminate color="green" size="100"></v-progress-circular>
-    </v-row>
-  </v-container>
+  <v-card class="mx-auto" max-width="1500px" width="100%" flat>
+    <v-container class="mt-5" fluid>
+      <v-row v-if="!loading">
+        <v-col>
+          <h2 class="font-weight-bold display-2 text-center">{{ plantSpecies.croatianName }}</h2>
+        </v-col>
+      </v-row>
+      <v-row v-if="!loading">
+        <v-col cols="12" md="3" class="d-none d-md-block">
+          <v-navigation-drawer permanent>
+            <v-list nav dense>
+              <v-list-item-group>
+                <v-list-item link :to="{ name: 'AdminPlantSpeciesView' }" color="green">
+                  <v-list-item-content>
+                    <v-list-item-title>Osnovne informacije</v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+                <v-list-item link :to="{ name: 'AdminPlantSpeciesImages' }" color="green">
+                  <v-list-item-content>
+                    <v-list-item-title>Slike</v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+                <v-list-item link :to="{ name: 'AdminPlantSpeciesUsefulParts' }" color="green">
+                  <v-list-item-content>
+                    <v-list-item-title>Uporabni dijelovi</v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+                <v-list-item link :to="{name: 'AdminUsefulPartImages'}" color="green">
+                  <v-list-item-content>
+                    <v-list-item-title>Slike uporabnih dijelova</v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+                <v-list-item link :to="{ name: 'AdminPlantSpeciesBioactiveSubstances' }"
+                  color="green"
+                >
+                  <v-list-item-content>
+                    <v-list-item-title>Bioaktivne tvari</v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+                <v-list-item link :to="{ name: 'AdminPlantSpeciesSubspecies' }" color="green">
+                  <v-list-item-content>
+                    <v-list-item-title>Podvrste</v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list-item-group>
+            </v-list>
+          </v-navigation-drawer>
+        </v-col>
+        <v-col cols="12" md="9">
+          <router-view></router-view>
+        </v-col>
+      </v-row>
+      <v-row
+        v-if="loading"
+        class="fill-height ma-0"
+        align="center"
+        justify="center"
+      >
+        <v-progress-circular indeterminate color="green" size="100"></v-progress-circular>
+      </v-row>
+    </v-container>
+  </v-card>
 </template>
 
 <script>

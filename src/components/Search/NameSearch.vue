@@ -13,8 +13,11 @@
         text
         medium
         @click="searchByName"
+        class="d-block"
       >
-        <span class="d-none d-md-inline">Pretraži</span>
+        <span class="d-none d-md-inline">
+          Pretraži
+        </span>
         <v-icon class="ml-2" medium>
           mdi-magnify
         </v-icon>

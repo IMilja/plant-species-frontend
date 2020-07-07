@@ -1,21 +1,21 @@
 <template>
   <v-container>
     <v-row>
-      <v-col class="col-12 col-lg-6">
+      <v-col class="col-12 col-md-6">
         <p class="title font-weight-regular mb-2">Latinski naziv</p>
         <p class="body-1 font-weight-regular">{{ plantSpecies.latinName }}</p>
       </v-col>
-      <v-col class="col-12 col-lg-6" >
+      <v-col class="col-12 col-md-6" >
         <p class="title font-weight-regular mb-2">Sinonim</p>
         <p class="body-1 font-weight-regular">{{ plantSpecies.synonym }}</p>
       </v-col>
     </v-row>
     <v-row>
-      <v-col class="col-12 col-lg-6">
+      <v-col class="col-12 col-md-6">
         <p class="title font-weight-regular mb-2">Sistematičar</p>
         <p class="body-1 font-weight-regular">{{ systematist }}</p>
       </v-col>
-      <v-col class="col-12 col-lg-6">
+      <v-col class="col-12 col-md-6">
         <p class="title font-weight-regular mb-2">Rod</p>
         <p class="body-1 font-weight-regular">{{ genus.name }}</p>
       </v-col>
