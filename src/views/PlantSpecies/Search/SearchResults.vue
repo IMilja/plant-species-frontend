@@ -1,6 +1,6 @@
 <template>
   <v-card class="mx-auto" max-width="1750px" min-height="800px" width="100%">
-    <v-container>
+    <v-container fluid>
       <v-row class="justify-center px-5">
         <v-col>
           <h2 class="text-center font-weight-bold display-2 mb-3">
