@@ -40,6 +40,7 @@
                   item-value="id"
                   :error-messages="errors.usefulPartId"
                   color="green"
+                  item-color="green"
                 >
                   <template v-slot:no-data>
                     <span class="px-3 py-2">Nema unosa</span>

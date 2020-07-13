@@ -57,6 +57,7 @@
                 item-value="id"
                 :error-messages="errors.genusId"
                 color="green"
+                item-color="green"
               >
                 <template v-slot:no-data>
                   <span class="px-3 py-2">Nema unosa</span>
@@ -72,6 +73,7 @@
                 item-text="name"
                 item-value="id"
                 color="green"
+                item-color="green"
               >
                 <template v-slot:no-data>
                   <span class="px-3 py-2">Nema unosa</span>

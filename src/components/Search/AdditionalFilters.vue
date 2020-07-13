@@ -40,16 +40,16 @@
     <v-row>
       <v-col>
         <v-select
-            v-model="selectedUsefulParts"
-            label="Uporabnom dijelu"
-            placeholder="npr. Nadzemni dio"
-            clearable
-            multiple
-            :items="usefulParts"
-            item-text="croatianName"
-            item-value="id"
-            color="green"
-            item-color="green"
+          v-model="selectedUsefulParts"
+          label="Uporabnom dijelu"
+          placeholder="npr. Nadzemni dio"
+          clearable
+          multiple
+          :items="usefulParts"
+          item-text="croatianName"
+          item-value="id"
+          color="green"
+          item-color="green"
           ></v-select>
       </v-col>
     </v-row>

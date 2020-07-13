@@ -29,6 +29,7 @@
                   :rules="rules.bioactiveSubstance"
                   :error-messages="errors.bioactiveSubstanceId"
                   color="green"
+                  item-color="green"
                 >
                   <template v-slot:item="{ item, attrs, on }">
                     <v-list-item
@@ -80,6 +81,7 @@
                   :rules="rules.usefulPart"
                   :error-messages="errors.usefulPartId"
                   color="green"
+                  item-color="green"
                 >
                   <template v-slot:item="{ item, attrs, on }">
                     <v-list-item

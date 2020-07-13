@@ -39,6 +39,7 @@
                   item-value="id"
                   :error-messages="errors.botanicalFamilyId"
                   color="green"
+                  item-color="green"
                 >
                   <template v-slot:item="{ item, attrs, on }">
                     <v-list-item
