@@ -10,6 +10,7 @@ import botanicalFamily from './modules/botanicalFamily';
 import bioactiveSubstance from './modules/bioactiveSubstance';
 import measureUnit from './modules/measureUnit';
 import snackbar from './modules/snackbar';
+import users from './modules/users';
 
 Vue.use(Vuex);
 
@@ -25,5 +26,6 @@ export default new Vuex.Store({
     bioactiveSubstance,
     measureUnit,
     snackbar,
+    users,
   },
 });

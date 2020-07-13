@@ -3,6 +3,42 @@ import VueRouter from 'vue-router';
 
 Vue.use(VueRouter);
 
+function guardAdminArea(to, from, next) {
+  let isAuthenticated = false;
+
+  if (localStorage.getItem('currentUser')) {
+    isAuthenticated = true;
+  } else {
+    isAuthenticated = false;
+  }
+
+  if (isAuthenticated) {
+    next();
+  } else {
+    next({
+      name: 'Login',
+    });
+  }
+}
+
+function superAdminGuard(to, from, next) {
+  let isSuperAdmin = false;
+
+  if (localStorage.getItem('currentUser')) {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+    isSuperAdmin = currentUser.userRole === 'SUPER_ADMIN';
+  }
+
+  if (isSuperAdmin) {
+    next();
+  } else {
+    next({
+      name: 'PlantSpeciesHome',
+    });
+  }
+}
+
 const routes = [
   {
     path: '/',
@@ -54,11 +90,39 @@ const routes = [
           },
         ],
       },
+      {
+        path: '/users',
+        redirect: { name: 'Login' },
+        component: () => import(/* webpackChunkName: "Authentication" */ '@/views/Authentication.vue'),
+        children: [
+          {
+            path: 'login',
+            name: 'Login',
+            component: () => import(/* webpackChunkName: "Authentication" */ '@/components/Authentication/LoginForm.vue'),
+          },
+          {
+            path: 'forgot-password',
+            name: 'ForgotPassword',
+            component: () => import(/* webpackChunkName: "Authentication" */ '@/components/Authentication/ForgotPassword.vue'),
+          },
+          {
+            path: 'reset-password',
+            name: 'ResetPassword',
+            component: () => import(/* webpackChunkName: "Authentication" */ '@/components/Authentication/ResetPassword.vue'),
+          },
+          {
+            path: 'activate-account',
+            name: 'ActivateAccount',
+            component: () => import(/* webpackChunkName: "Authentication" */ '@/components/Authentication/ActivateAccount.vue'),
+          },
+        ],
+      },
     ],
   },
   {
     path: '/kontrolna-ploca',
     name: 'AdminPanel',
+    beforeEnter: guardAdminArea,
     component: () => import(/* webpackChunkName: "AdminLayout" */ '@/layouts/Admin.vue'),
     children: [
       {
@@ -111,6 +175,12 @@ const routes = [
         path: 'botanicke-porodice',
         name: 'BotanicalFamilyHome',
         component: () => import(/* webpackChungName: "BotanicalFamilyHome" */ '@/views/BotanicalFamilyHome.vue'),
+      },
+      {
+        path: 'korisnici',
+        name: 'Users',
+        beforeEnter: superAdminGuard,
+        component: () => import(/* webpackChunkName: "AdminPlantSpeciesSubspecies" */ '@/views/Users.vue'),
       },
     ],
   },

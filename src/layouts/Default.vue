@@ -1,7 +1,7 @@
 <template>
   <div class="fill-height bg-img">
     <v-app-bar app color="green" dark>
-      <v-toolbar-title>
+      <v-toolbar-title @click="goHome" class="c-pointer">
           VeleRi - <span class="text-uppercase">Biljne Vrste</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
@@ -33,7 +33,7 @@ export default {
     goHome() {
       this.$router.push({
         name: 'Home',
-      });
+      }).catch(() => {});
     },
   },
 };
@@ -42,5 +42,8 @@ export default {
 <style>
 .bg-img {
   background: url("../assets/background.jpg") no-repeat center;
+}
+.c-pointer {
+  cursor: pointer;
 }
 </style>

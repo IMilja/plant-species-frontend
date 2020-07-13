@@ -7,7 +7,7 @@
         </v-col>
       </v-row>
       <v-row v-if="!loading">
-        <v-col cols="12" md="3" class="d-none d-md-block">
+        <v-col cols="12" md="3">
           <v-navigation-drawer permanent>
             <v-list nav dense>
               <v-list-item-group>

@@ -39,6 +39,14 @@
             <v-list-item-title>Botanička porodice</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        <v-list-item link :to="{ name: 'Users' }" v-if="isSuperAdmin">
+          <v-list-item-action>
+            <v-icon>mdi-account</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>Korisnici</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
 
@@ -57,7 +65,7 @@
       <v-btn
         color="white"
         text
-        :to="{ name: 'Home' }"
+        @click="logoutUser"
       >
         Odjavi se
       </v-btn>
@@ -78,7 +86,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'Admin',
@@ -93,6 +101,22 @@ export default {
     ...mapState({
       snackbar: (state) => state.snackbar.snackbar,
     }),
+    ...mapGetters({
+      isSuperAdmin: 'users/isSuperAdmin',
+    }),
+  },
+
+  methods: {
+    ...mapActions({
+      logout: 'users/logout',
+    }),
+    logoutUser() {
+      this.logout();
+      this.$router.push({
+        replace: true,
+        name: 'Home',
+      });
+    },
   },
 };
 </script>
