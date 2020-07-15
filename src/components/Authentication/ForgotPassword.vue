@@ -68,6 +68,11 @@ export default {
 
         this.msgType = 'info';
         this.msg = response.data.msg;
+        setTimeout(() => {
+          this.$router.push({
+            name: 'Home',
+          });
+        }, 1500);
       } catch (error) {
         if (error.response.data.errors) {
           this.errors = error.response.data.errors.reduce((map, object) => {

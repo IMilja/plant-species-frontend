@@ -96,7 +96,7 @@ export default {
           }, {});
         } else {
           this.msgType = 'error';
-          this.error = error.response.data.msg;
+          this.msg = error.response.data.msg;
         }
       } finally {
         this.loading = false;
