@@ -8,7 +8,7 @@
   <template v-slot:top>
     <v-toolbar flat color="white">
       <v-spacer></v-spacer>
-      <v-dialog v-model="dialog" max-width="350px" :loading="formLoading">
+      <v-dialog v-model="dialog" max-width="350px">
         <template v-slot:activator="{ on, attrs }">
           <v-btn
             color="green"
@@ -18,7 +18,7 @@
             v-on="on"
           >Unesi novog korisnika</v-btn>
         </template>
-        <v-card>
+        <v-card :loading="formLoading">
           <v-card-title>
             <span class="headline">{{ formTitle }}</span>
           </v-card-title>

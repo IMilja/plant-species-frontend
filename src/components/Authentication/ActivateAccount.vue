@@ -14,35 +14,8 @@
         {{ msg }}
       </v-alert>
 
-      <v-row class="pt-10 px-5">
-        <v-col cols="12" md="6">
-          <v-text-field
-            label="E-Mail adresa"
-            placeholder="E-Mail adresa računa za aktivaciju"
-            name="login"
-            prepend-icon="mdi-account"
-            type="text"
-            color="green"
-            v-model="activationData.email"
-            :error-messages="errors.email"
-          ></v-text-field>
-        </v-col>
-        <v-col cols="12" md="6">
-          <v-text-field
-            label="Stara lozinka"
-            placeholder="Trenuta lozinka računa"
-            name="login"
-            prepend-icon="mdi-lock"
-            type="password"
-            color="green"
-            v-model="activationData.oldPassword"
-            :error-messages="errors.oldPassword"
-          ></v-text-field>
-        </v-col>
-      </v-row>
-
       <v-row class="px-5 mt-5">
-        <v-col cols="12" md="6">
+        <v-col cols="12">
           <v-text-field
             label="Nova lozinka"
             placeholder="Unesite novu lozinku"
@@ -54,7 +27,7 @@
             :error-messages="errors.newPassword"
           ></v-text-field>
         </v-col>
-        <v-col cols="12" md="6">
+        <v-col cols="12">
           <v-text-field
             label="Ponovite novu lozinku"
             placeholder="Ponovno unesite novu lozinku"
@@ -92,8 +65,6 @@ export default {
   data() {
     return {
       activationData: {
-        email: '',
-        oldPassword: '',
         newPassword: '',
         repeatPassword: '',
       },
@@ -111,7 +82,7 @@ export default {
         this.errors = {};
         this.loading = true;
 
-        const response = await HTTP.put(`users/activate-account?activationHash=${activationHash}`, this.activationData);
+        const response = await HTTP.put(`users/activate-account/${activationHash}`, this.activationData);
 
         this.msgType = 'info';
         this.msg = response.data.msg;

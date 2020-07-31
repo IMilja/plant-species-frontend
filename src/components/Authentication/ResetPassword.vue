@@ -78,7 +78,7 @@ export default {
         this.errors = {};
         this.loading = true;
 
-        const response = await HTTP.put(`users/forgot-password?passwordResetHash=${passwordResetHash}`, this.resetForm);
+        const response = await HTTP.put(`users/forgot-password/${passwordResetHash}`, this.resetForm);
 
         this.msg = response.data.msg;
         this.msgType = 'info';
